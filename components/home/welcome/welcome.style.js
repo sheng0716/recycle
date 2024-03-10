@@ -47,7 +47,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  locationBtn: {
+    width: 50,
+    height: "100%",
+    backgroundColor: COLORS.tertiary,
+    borderRadius: SIZES.medium,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   searchBtnImage: {
+    width: "50%",
+    height: "50%",
+    tintColor: COLORS.white,
+  },
+  locationBtnImage: {
     width: "50%",
     height: "50%",
     tintColor: COLORS.white,

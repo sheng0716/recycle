@@ -47,7 +47,24 @@ const Welcome = () => {
             style={styles.searchBtnImage}
           />
         </TouchableOpacity>
+
+
+        {/* location button */}
+        <TouchableOpacity
+          style={styles.locationBtn}
+          onPress={() => {
+            router.push(`/map`);
+          }}
+        >
+          <Image
+            source={icons.location}
+            resizeMode='contain'
+            style={styles.locationBtnImage}
+          />
+        </TouchableOpacity>
+
       </View>
+
       {/* if user click on this, it will automatically go to search, whether search 'retailer' or 'recycle' */}
       <View style={styles.tabsContainer}>
         <FlatList

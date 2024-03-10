@@ -18,8 +18,7 @@ import {
     Specifics,
 } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
-import useFetch from "../../hook/useFetch";
-import companiesDbService from "../../assets/DbService/companiesDbService";
+// import companiesDbService from "../../assets/DbService/companiesDbService";
 import useFetchByCompanyId from "../../hook/useFetchByCompanyId";
 
 const tabs = ["About", "Qualifications", "Responsibilities"];
@@ -31,7 +30,7 @@ const CompanyDetails = () => {
     // const { data, isLoading, error, refetch } = useFetch("job-details", {
     //     job_id: params.id,
     // });
-    const [{ company, setCompany }] = useState([]);
+    // const [{ company, setCompany }] = useState([]);
 
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [refreshing, setRefreshing] = useState(false);
@@ -60,24 +59,28 @@ const CompanyDetails = () => {
 
     const displayTabContent = () => {
         switch (activeTab) {
-            case "Qualifications":
+            case "About":
                 return (
-                    <Specifics
-                        title='Qualifications'
-                        points={data[0].job_highlights?.Qualifications ?? ["N/A"]}
+                    <JobAbout
+                        info={data.description ?? "No data provided"}
+
                     />
                 );
 
-            case "About":
+            case "Qualifications":
                 return (
-                    <JobAbout info={data[0].job_description ?? "No data provided"} />
+                    <Specifics
+                    // title='Qualifications'
+                    // points={data[0].job_highlights?.Qualifications ?? ["N/A"]}
+                    />
                 );
+
 
             case "Responsibilities":
                 return (
                     <Specifics
-                        title='Responsibilities'
-                        points={data[0].job_highlights?.Responsibilities ?? ["N/A"]}
+                    // title='Responsibilities'
+                    // points={data[0].job_highlights?.Responsibilities ?? ["N/A"]}
                     />
                 );
 
@@ -114,12 +117,7 @@ const CompanyDetails = () => {
                         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                     }
                 >
-                    <View>
-                        <Text>{params.id}</Text>
-                        <Text>{data.name}</Text>
-
-                    </View>
-                    {/* {isLoading ? (
+                    {isLoading ? (
                         <ActivityIndicator size='large' color={COLORS.primary} />
                     ) : error ? (
                         <Text>Something went wrong</Text>
@@ -127,11 +125,14 @@ const CompanyDetails = () => {
                         <Text>No data available</Text>
                     ) : (
                         <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
+                            <Text>{params.id}</Text>
+                            <Text>{data.name}</Text>
                             <Company
-                                companyLogo={data[0].employer_logo}
-                                jobTitle={data[0].job_title}
-                                companyName={data[0].employer_name}
-                                location={data[0].job_country}
+                                companyLogo={data.logoPath}
+                                type={data.type}
+                                companyName={data.name}
+                                location={data.state}
+                                locationUrl={data.locationUrl}
                             />
 
                             <JobTabs
@@ -142,7 +143,7 @@ const CompanyDetails = () => {
 
                             {displayTabContent()}
                         </View>
-                    )} */}
+                    )}
                 </ScrollView>
 
                 {/* <JobFooter url={data[0]?.job_google_link ?? 'https://careers.google.com/jobs/results/'} /> */}
