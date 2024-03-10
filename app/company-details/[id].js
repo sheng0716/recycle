@@ -19,19 +19,37 @@ import {
 } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
 import useFetch from "../../hook/useFetch";
+import companiesDbService from "../../assets/DbService/companiesDbService";
+import useFetchByCompanyId from "../../hook/useFetchByCompanyId";
 
 const tabs = ["About", "Qualifications", "Responsibilities"];
 
-const JobDetails = () => {
+const CompanyDetails = () => {
     const params = useLocalSearchParams();
     const router = useRouter();
 
-    const { data, isLoading, error, refetch } = useFetch("job-details", {
-        job_id: params.id,
-    });
+    // const { data, isLoading, error, refetch } = useFetch("job-details", {
+    //     job_id: params.id,
+    // });
+    const [{ company, setCompany }] = useState([]);
 
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [refreshing, setRefreshing] = useState(false);
+
+    // const fetchData = async () => {
+    //     try {
+    //         const companiesData = await companiesDbService.getAllCompanyDetailsBycompanyId(companyId);
+    //     }
+    //     catch {
+
+    //     }
+    // };
+
+    const c_id = params.id;
+    const { data, isLoading, error, refetch } = useFetchByCompanyId('/api/companies', c_id)
+
+    const companyName = data.name;
+    console.log(companyName);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -91,10 +109,17 @@ const JobDetails = () => {
 
             <>
                 <ScrollView showsVerticalScrollIndicator={false}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                    refreshControl=
+                    {
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }
                 >
-                    {isLoading ? (
+                    <View>
+                        <Text>{params.id}</Text>
+                        <Text>{data.name}</Text>
+
+                    </View>
+                    {/* {isLoading ? (
                         <ActivityIndicator size='large' color={COLORS.primary} />
                     ) : error ? (
                         <Text>Something went wrong</Text>
@@ -117,13 +142,13 @@ const JobDetails = () => {
 
                             {displayTabContent()}
                         </View>
-                    )}
+                    )} */}
                 </ScrollView>
 
-                <JobFooter url={data[0]?.job_google_link ?? 'https://careers.google.com/jobs/results/'} />
+                {/* <JobFooter url={data[0]?.job_google_link ?? 'https://careers.google.com/jobs/results/'} /> */}
             </>
         </SafeAreaView>
     );
 };
 
-export default JobDetails;
+export default CompanyDetails;

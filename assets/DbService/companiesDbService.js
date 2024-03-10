@@ -15,6 +15,7 @@ function transformCompaniesData(response) {
         logoPath: row[7],
         locationUrl: row[8],
         websiteUrl: row[9],
+        state: row[10],
     }));
 }
 
@@ -32,7 +33,17 @@ const getAllCompanies = async () => {
 const getAllRetailer = async () => {
     try {
         const response = await axios.get(`${pre_url}/api/companies/retailer`);
-        return transformCompaniesData(response.data.companies);
+        return transformCompaniesData(response.data.retailer);
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+const getAllCompanyDetailsBycompanyId = async (companyId) => {
+    try {
+        const response = await axios.get(`${pre_url}/api/companies/${companyId}`);
+        return transformCompaniesData(response.data.company);
 
     } catch (error) {
         console.error(error);
@@ -43,4 +54,5 @@ const getAllRetailer = async () => {
 export default {
     getAllCompanies,
     getAllRetailer,
+    getAllCompanyDetailsBycompanyId,
 };

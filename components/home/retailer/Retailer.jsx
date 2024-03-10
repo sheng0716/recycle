@@ -16,21 +16,24 @@ import companiesDbService from "../../../assets/DbService/companiesDbService";
 
 const Retailer = () => {
   const router = useRouter();
-  // const isLoading = false;
-  // const error = false;
 
   // destructure data from useFetch
   // const { isLoading, error } = useFetch('/api/companies');
   // Initialise with an empty array
   const [retailer, setRetailer] = useState([]);
   const [companies, setCompanies] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState();
 
   // console.log(data);
 
+  const handleCardPress = (item) => {
+    router.push(`/company-details/${item.companyId}`);//route to the specific company page
+    setSelectedCompany(item.companyId);
+  }
   // see what data is fetch
   const fetchData = async () => {
     try {
-      const companiesData = await companiesDbService.getAllCompanies();
+      const companiesData = await companiesDbService.getAllRetailer();
       setCompanies(companiesData);
       console.log(companies);
     } catch (error) {
@@ -56,8 +59,8 @@ const Retailer = () => {
           renderItem={({ item }) => (
             <PopularJobCard
               item={item}
-            // selectedJob={selectedJob}
-            // handleCardPress={handleCardPress}
+              selectedCompany={selectedCompany}
+              handleCardPress={handleCardPress}
             />
           )}
           keyExtractor={(item) => item?.companyId.toString()}

@@ -4,19 +4,13 @@ import styles from "./popularjobcard.style";
 import { checkImageURL } from "../../../../utils";
 
 
-const PopularJobCard = ({ item, handleCardPress }) => {
+const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
   return (
-
     <TouchableOpacity
-      // style={styles.container(selectedJob, item)}
+      style={styles.container(selectedJob, item)}
       onPress={() => handleCardPress(item)}
     >
-      <TouchableOpacity
-      // style={styles.logoContainer(selectedJob, item)}
-      >
-        <Text style={styles.companyName} numberOfLines={1}>
-          {item.name}
-        </Text>
+      <TouchableOpacity style={styles.logoContainer(selectedJob, item)}>
         <Image
           source={{
             uri: checkImageURL(item?.logoPath)
@@ -27,20 +21,29 @@ const PopularJobCard = ({ item, handleCardPress }) => {
           style={styles.logoImage}
         />
       </TouchableOpacity>
+      <Text style={styles.jobName} numberOfLines={1}>
+        {item.name}
+      </Text>
 
-      {/* <View style={styles.infoContainer}>
-        <Text style={styles.jobName(selectedJob, item)} numberOfLines={1}>
+      <View style={styles.infoContainer}>
+
+        {/* <Text style={styles.jobName(selectedJob, item)} numberOfLines={1}>
           {item.job_title}
-        </Text>
+        </Text> */}
+
         <View style={styles.infoWrapper}>
-          <Text style={styles.publisher(selectedJob, item)}>
+
+          {/* <Text style={styles.publisher(selectedJob, item)}>
             {item?.job_publisher} -
-          </Text>
-          <Text style={styles.location}> {item.job_country}</Text>
+          </Text> */}
+
+          <Text style={styles.location}> {item.state}</Text>
         </View>
-      </View> */}
+
+      </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
+
 
 export default PopularJobCard

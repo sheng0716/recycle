@@ -26,7 +26,7 @@ def api_get_all_companies():
     finally:
         conn.close()
 
-# Function to get all company details from the company
+# Function to get all retailer details from the company list
 @app.route('/api/companies/retailer', methods=['GET'])
 def api_get_all_companies_with_retailer():
     try:
@@ -44,7 +44,44 @@ def api_get_all_companies_with_retailer():
     finally:
         conn.close()
 
+# Function to get all recycle details from the company list
+@app.route('/api/companies/recycle', methods=['GET'])
+def api_get_all_companies_with_recycle():
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
 
+        sql_command = "SELECT * FROM companies WHERE type = 'recycle';"
+        cursor.execute(sql_command)
+        recycle_companies = cursor.fetchall()
+        return jsonify({'recycle': recycle_companies})
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+
+# Function to get company details by companyId from companies
+
+@app.route('/api/companies/<int:companyId>', methods=['GET'])
+def api_get_company_detail_by_companyId(companyId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command='SELECT * FROM companies WHERE companyId = ?;'
+        cursor.execute(sql_command, (companyId,))
+        company=cursor.fetchone()
+        return jsonify(company)
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+        
 # Function to get book_id by user_id from bookshelves
 
 # @app.route('/api/bookshelves/<int:user_id>', methods=['GET'])
