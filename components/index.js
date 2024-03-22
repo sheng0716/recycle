@@ -4,6 +4,7 @@ import ScreenHeaderBtn from "./common/header/ScreenHeaderBtn";
 import Welcome from "./home/welcome/Welcome";
 import Nearbyjobs from "./home/recycle/Nearbyjobs";
 import Retailer from "./home/retailer/Retailer";
+import Product from "./home/product/Product";
 
 // job details screen
 import Company from "./jobdetails/company/Company";
@@ -25,5 +26,6 @@ export {
   JobAbout,
   JobFooter,
   Specifics,
-  NearbyJobCard
+  NearbyJobCard,
+  Product,
 };

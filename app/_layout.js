@@ -1,4 +1,5 @@
 import { Stack } from "expo-router";
+import { Drawer } from "expo-router/drawer";
 import { useFonts } from "expo-font";
 // import * as SplashScreen from "expo-splash-screen";
 
@@ -21,9 +22,15 @@ const Layout = () => {
     }
 
     return (
-        <Stack initialRouteName="home">
-            <Stack.Screen name="home" />
+        <Stack
+        // initialRouteName="home"
+        >
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+
+
         </Stack>
+
     )
 };
 

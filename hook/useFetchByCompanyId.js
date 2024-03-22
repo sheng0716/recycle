@@ -54,6 +54,7 @@ const useFetchByCompanyId = (endpoint, query) => {
             const response = await axios.request(options);
             const companiesData = transformCompanyDataRow(response.data);
             setData(companiesData);
+            console.log(data);
             setIsLoading(false);
         } catch (error) {
             setError(error);

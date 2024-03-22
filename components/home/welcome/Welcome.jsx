@@ -15,7 +15,7 @@ import { icons, SIZES } from "../../../constants";
 //use for query??
 const companyType = ['retailer', 'recycle'];
 
-const Welcome = () => {
+const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
   const router = useRouter();
   //setCompanyType
   const [activeCompanyType, setActiveCompanyType] = useState('retailer');
@@ -27,20 +27,20 @@ const Welcome = () => {
     <View>
       <View style={styles.container}>
         <Text style={styles.userName}>Hello </Text>
-        <Text style={styles.welcomeMessage}>What are looking for</Text>
+        <Text style={styles.welcomeMessage}>What are looking for?</Text>
       </View>
 
       <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
           <TextInput
             style={styles.searchInput}
-            value=''
-            onChangeText={() => { }}
+            value={searchTerm}
+            onChangeText={(text) => setSearchTerm(text)}
             placeholder='What are you looking for?'
           />
         </View>
 
-        <TouchableOpacity style={styles.searchBtn} onPress={() => { }}>
+        <TouchableOpacity style={styles.searchBtn} onPress={handleClick}>
           <Image
             source={icons.search}
             resizeMode='contain'

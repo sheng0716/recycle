@@ -8,11 +8,6 @@ CORS(app)  # Enable CORS for all routes
 # Define the SQLite database path
 DATABASE = 'recycle_app.db'
 
-def get_row_as_dict(row):
-    row_dict={
-
-    }
-    return row_dict
 
 # Function to get all company details from the company
 @app.route('/api/companies', methods=['GET'])
@@ -21,16 +16,14 @@ def api_get_all_companies():
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
-# fetch data from table 
         cursor.execute('SELECT * FROM companies')
         companies_data = cursor.fetchall()
-
+        
         # Get column names
         cursor.execute("PRAGMA table_info(companies)")
-        columns_info = cursor.fetchall()
-        column_names = [column[1] for column in columns_info]
+        column_names = [column[1] for column in cursor.fetchall()]
 
-    #    Create dictionaries with keys matching column names
+       # Create dictionaries with keys matching column names
         companies_with_headers = []
         for row in companies_data:
             company_dict = {}
@@ -44,7 +37,6 @@ def api_get_all_companies():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-        
 
 # Function to get all retailer details from the company list
 @app.route('/api/companies/retailer', methods=['GET'])
@@ -82,43 +74,6 @@ def api_get_all_companies_with_recycle():
     finally:
         conn.close()
 
-def get_row_material_as_dict(row):
-    row_dict={
-        'materialId':row[0],
-        'name':row[1],
-        'desc':row[2],
-        'imagePath':row[3],
-    }
-    return row_dict
-# Function to get recycle material data
-@app.route('/api/materials', methods=['GET'])
-def api_get_all_materials():
-    try:
-        conn = sqlite3.connect(DATABASE)
-        cursor = conn.cursor()
-
-        sql_command = "SELECT * FROM materials;"
-        cursor.execute(sql_command)
-        rows = cursor.fetchall()
-
-        # materials = []
-        # for row in rows:
-        #     material_dict = {
-        #         'id': row[0],
-        #         'name': row[1],
-        #         'description': row[2],
-        #         'image': row[3]
-        #     }
-        #     materials.append(material_dict)
-
-        return jsonify({'materials': rows})
-
-    except Exception as e:
-        print('Error:', str(e))
-        return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
-
 
 # Function to get company details by companyId from companies
 
@@ -132,24 +87,6 @@ def api_get_company_detail_by_companyId(companyId):
         cursor.execute(sql_command, (companyId,))
         company=cursor.fetchone()
         return jsonify(company)
-
-    except Exception as e:
-        print('Error:', str(e))
-        return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
-# Function to get company details by materialId
-
-@app.route('/api/materials/<int:materialId>', methods=['GET'])
-def api_get_company_detail_by_materialId(materialId):
-    try:
-        conn = sqlite3.connect(DATABASE)
-        cursor = conn.cursor()
-
-        sql_command='SELECT * FROM centerMaterials WHERE materialId = ?;'
-        cursor.execute(sql_command, (materialId,))
-        center=cursor.fetchall()
-        return jsonify({'center_receive_material':center})
 
     except Exception as e:
         print('Error:', str(e))

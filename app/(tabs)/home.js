@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View, TouchableOpacity } from "react-native";
 import { Stack, useRouter } from "expo-router";
+import { NavigationContainer } from '@react-navigation/native'
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Drawer } from "expo-router/drawer";
 
-import { COLORS, icons, images, SIZES } from "../constants";
+import { COLORS, icons, images, SIZES } from "../../constants";
 import {
     Nearbyjobs,
     Retailer,
     ScreenHeaderBtn,
     Welcome,
-} from "../components";
+    Product,
+} from "../../components";
 
 const Home = () => {
     const router = useRouter()
@@ -21,7 +25,9 @@ const Home = () => {
                     headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerShadowVisible: false,
                     headerLeft: () => (
+
                         <ScreenHeaderBtn iconUrl={icons.menu} dimension='60%' />
+
                     ),
                     headerRight: () => (
                         <ScreenHeaderBtn iconUrl={images.profile} dimension='100%' />
@@ -38,17 +44,19 @@ const Home = () => {
                     }}
                 >
                     <Welcome
-                    // searchTerm={searchTerm}
-                    // setSearchTerm={setSearchTerm}
-                    // handleClick={() => {
-                    //     if (searchTerm) {
-                    //         router.push(`/search/${searchTerm}`)
-                    //     }
-                    // }}
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        handleClick={() => {
+                            if (searchTerm) {
+                                router.push(`/search/${searchTerm}`)
+                            }
+                        }}
                     />
 
                     <Retailer />
                     <Nearbyjobs />
+                    {/* //product have issue, i use scrollEnabled=false at product component */}
+                    <Product />
                 </View>
             </ScrollView>
         </SafeAreaView>
