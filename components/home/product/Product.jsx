@@ -4,6 +4,7 @@ import { SIZES } from '../../../constants';
 import ProductCard from './ProductCard'
 import { useRouter } from 'expo-router'
 import materialDbService from '../../../assets/DbService/productDbService'
+import axios from 'axios';
 
 
 const Product = () => {
@@ -11,7 +12,7 @@ const Product = () => {
     const [materials, setMaterials] = useState([]);
 
     // see what data is fetch
-    const fetchData = async () => {
+    const fetchMaterials = async () => {
         try {
             const materialData = await materialDbService.getAllMaterials();
             setMaterials(materialData);
@@ -21,21 +22,21 @@ const Product = () => {
         }
     };
     useEffect(() => {
-        fetchData();
+        fetchMaterials();
     }, []);
 
     return (
         <View>
-            <View style={{ marginTop: SIZES.medium }}>
+            <View style={{ marginTop: SIZES.small }}>
                 <FlatList
-                    scrollEnabled={false}
+                    // scrollEnabled={false}
                     data={materials}
-                    renderItem={({ item }) => (
+                    renderItem={({ item }) =>
                         <ProductCard
                             item={item}
                         />
-                    )}
-                    keyExtractor={(item) => item?.materialId.toString()}
+                    }
+                    keyExtractor={(item) => item.id.toString()}
                     contentContainerStyle={{ rowGap: SIZES.medium }}
                 />
             </View>

@@ -58,7 +58,7 @@ const Retailer = () => {
           data={companies}
           renderItem={({ item }) => (
             <PopularJobCard
-              item={item} np
+              item={item}
               selectedCompany={selectedCompany}
               handleCardPress={handleCardPress}
             />

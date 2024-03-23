@@ -55,8 +55,7 @@ const Home = () => {
 
                     <Retailer />
                     <Nearbyjobs />
-                    {/* //product have issue, i use scrollEnabled=false at product component */}
-                    <Product />
+
                 </View>
             </ScrollView>
         </SafeAreaView>

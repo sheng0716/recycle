@@ -25,7 +25,7 @@ function transformMaterialDataRow(row) {
 const getAllMaterials = async () => {
     try {
         const response = await axios.get(`${pre_url}/api/materials`);
-        return transformMaterialData(response.data.materials);
+        return response.data.materials;
     } catch (error) {
         console.error(error);
         throw error;

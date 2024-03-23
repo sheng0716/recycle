@@ -21,10 +21,10 @@ const ProductCard = ({ item }) => {
                         source={imageSource}
                         style={styles.image}
                     />
-                </View>
-                <View style={styles.detail}>
-                    <Text style={styles.title}>{item.materialId} {item.name}</Text>
+                    <View style={styles.detail}>
+                        <Text style={styles.title}>{item.id} {item.name}</Text>
 
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>

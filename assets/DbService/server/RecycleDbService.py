@@ -101,17 +101,17 @@ def api_get_all_materials():
         cursor.execute(sql_command)
         rows = cursor.fetchall()
 
-        # materials = []
-        # for row in rows:
-        #     material_dict = {
-        #         'id': row[0],
-        #         'name': row[1],
-        #         'description': row[2],
-        #         'image': row[3]
-        #     }
-        #     materials.append(material_dict)
+        materials = []
+        for row in rows:
+            material_dict = {
+                'id': row[0],
+                'name': row[1],
+                'description': row[2],
+                'image': row[3]
+            }
+            materials.append(material_dict)
 
-        return jsonify({'materials': rows})
+        return jsonify({'materials': materials})
 
     except Exception as e:
         print('Error:', str(e))
