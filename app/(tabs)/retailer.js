@@ -1,18 +1,18 @@
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
 import React from 'react';
 import { Product } from '../../components';
-import { COLORS } from '../../constants';
+import { COLORS, SIZES } from '../../constants';
 
 
 const retailer = () => {
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite, marginRight: SIZES.small, marginLeft: SIZES.small }}>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View>
 
                     <View>
-                        <Text>This is home</Text>
+                        <Text>This is retailer</Text>
                         <Product />
                     </View>
                 </View>

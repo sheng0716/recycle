@@ -27,19 +27,25 @@ const Product = () => {
 
     return (
         <View>
-            <View style={{ marginTop: SIZES.small }}>
-                <FlatList
-                    // scrollEnabled={false}
-                    data={materials}
-                    renderItem={({ item }) =>
-                        <ProductCard
-                            item={item}
-                        />
-                    }
-                    keyExtractor={(item) => item.id.toString()}
-                    contentContainerStyle={{ rowGap: SIZES.medium }}
-                />
-            </View>
+            <Text style={{
+                fontWeight: 'bold',
+                fontSize: 20,
+                marginBottom: 10,
+            }}>
+                Categories
+            </Text>
+            <FlatList
+                scrollEnabled={false}
+                numColumns={4}
+                data={materials}
+                renderItem={({ item }) =>
+                    <ProductCard
+                        item={item}
+                    />
+                }
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={{ rowGap: SIZES.medium }}
+            />
         </View>
     )
 }

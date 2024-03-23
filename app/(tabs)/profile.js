@@ -4,7 +4,7 @@ import React from 'react';
 const List = () => {
     return (
         <View>
-            <Text>This is home</Text>
+            <Text>This is profile</Text>
         </View>
     )
 }

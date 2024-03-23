@@ -3,11 +3,11 @@ import { COLORS, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
     container: {
-        width: 182,
+        width: 150,
         height: 150,
         marginEnd: 22,
         borderRadius: SIZES.medium,
-        backgroundColor: 'white'
+        // backgroundColor: 'white',
     },
     imageContainer: {
         flex: 1,
@@ -16,20 +16,36 @@ const styles = StyleSheet.create({
         marginRight: SIZES.small / 2,
         borderRadius: SIZES.small,
         overflow: 'hidden',
-        backgroundColor: 'black',
     },
     image: {
-        width: '100%',
+        // width: '100%',
         height: '100 %',
         resizeMode: 'contain',
+        // width: 35,
+        // height: 35,
+        marginBottom: 8,
     },
     detail: {
         padding: SIZES.small,
     },
     title: {
-        fontSize: SIZES.large,
-        marginBottom: 2,
-    }
+        // fontSize: SIZES.medium,
+        // marginBottom: 2,
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginBottom: 10,
+    },
+    item: {
+        flex: 1,
+        alignItems: 'center',
+        padding: 8,
+        margin: 4,
+        height: 100,
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 12,
+    },
 })
 
 export default styles;

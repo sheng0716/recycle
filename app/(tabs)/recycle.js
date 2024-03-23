@@ -4,7 +4,7 @@ import React from 'react';
 const recycle = () => {
     return (
         <View>
-            <Text>This is home</Text>
+            <Text>This is recycle</Text>
         </View>
     )
 }
