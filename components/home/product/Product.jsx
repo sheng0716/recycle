@@ -25,6 +25,9 @@ const Product = () => {
         fetchMaterials();
     }, []);
 
+    const handleCardPress = (item) => {
+        router.push('/search/${item.id}');
+    }
     return (
         <View>
             <Text style={{
@@ -41,6 +44,7 @@ const Product = () => {
                 renderItem={({ item }) =>
                     <ProductCard
                         item={item}
+                        handleCardPress={handleCardPress}
                     />
                 }
                 keyExtractor={(item) => item.id.toString()}

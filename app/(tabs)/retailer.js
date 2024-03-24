@@ -13,7 +13,7 @@ const retailer = () => {
 
                     <View>
                         <Text>This is retailer</Text>
-                        <Product />
+
                     </View>
                 </View>
 

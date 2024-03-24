@@ -9,6 +9,18 @@ const styles = StyleSheet.create({
         borderRadius: SIZES.medium,
         // backgroundColor: 'white',
     },
+    logoImage: {
+        width: "70%",
+        height: "70%",
+    },
+    logoContainer: {
+        width: 50,
+        height: 50,
+        // backgroundColor: selectedJob === item.companyId ? "#FFF" : COLORS.white,
+        borderRadius: SIZES.medium,
+        justifyContent: "center",
+        alignItems: "center",
+    },
     imageContainer: {
         flex: 1,
         width: 90,

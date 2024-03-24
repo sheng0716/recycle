@@ -7,7 +7,7 @@ import { Drawer } from "expo-router/drawer";
 
 import { COLORS, icons, images, SIZES } from "../../constants";
 import {
-    Nearbyjobs,
+    Recycle,
     Retailer,
     ScreenHeaderBtn,
     Welcome,
@@ -54,7 +54,7 @@ const Home = () => {
                     />
 
                     <Retailer />
-                    <Nearbyjobs />
+                    {/* <Recycle /> */}
 
                 </View>
             </ScrollView>
