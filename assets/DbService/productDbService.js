@@ -5,22 +5,22 @@ let pre_url = config.settings.serverPath;
 
 // this DBservice use to handle material and product
 
-function transformMaterialData(response) {
-    return response.map((row) => ({
-        materialId: row[0],
-        name: row[1],
-        desc: row[2],
-        imagePath: row[3],
-    }));
-}
-function transformMaterialDataRow(row) {
-    return {
-        materialId: row[0],
-        name: row[1],
-        desc: row[2],
-        imagePath: row[3],
-    };
-}
+// function transformMaterialData(response) {
+//     return response.map((row) => ({
+//         materialId: row[0],
+//         name: row[1],
+//         desc: row[2],
+//         imagePath: row[3],
+//     }));
+// }
+// function transformMaterialDataRow(row) {
+//     return {
+//         materialId: row[0],
+//         name: row[1],
+//         desc: row[2],
+//         imagePath: row[3],
+//     };
+// }
 //func to get materials data
 const getAllMaterials = async () => {
     try {
@@ -35,7 +35,7 @@ const getAllMaterials = async () => {
 const getAllCenterByMaterialId = async (materialId) => {
     try {
         const response = await axios.get(`${pre_url}/api/materials/${materialId}`);
-        return transformMaterialData(response.data.materials);
+        return response.data.centerMaterials;
     } catch (error) {
         console.error(error);
         throw error;

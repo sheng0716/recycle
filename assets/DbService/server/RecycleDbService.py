@@ -90,6 +90,7 @@ def get_row_material_as_dict(row):
         'imagePath':row[3],
     }
     return row_dict
+
 # Function to get recycle material data
 @app.route('/api/materials', methods=['GET'])
 def api_get_all_materials():
@@ -121,7 +122,6 @@ def api_get_all_materials():
 
 
 # Function to get company details by companyId from companies
-
 @app.route('/api/companies/<int:companyId>', methods=['GET'])
 def api_get_company_detail_by_companyId(companyId):
     try:
@@ -138,8 +138,9 @@ def api_get_company_detail_by_companyId(companyId):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-# Function to get company details by materialId
 
+
+# Function to get company id from pivot table by materialId
 @app.route('/api/materials/<int:materialId>', methods=['GET'])
 def api_get_company_detail_by_materialId(materialId):
     try:
@@ -148,8 +149,98 @@ def api_get_company_detail_by_materialId(materialId):
 
         sql_command='SELECT * FROM centerMaterials WHERE materialId = ?;'
         cursor.execute(sql_command, (materialId,))
-        center=cursor.fetchall()
-        return jsonify({'center_receive_material':center})
+        rows=cursor.fetchall()
+
+        centerMaterial=[]
+        for row in rows:
+            center_Material_dict={
+                'centerId':row[0],
+                'materialId':row[1]
+            }
+            centerMaterial.append(center_Material_dict)
+
+        return jsonify({'centerMaterials':centerMaterial})
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+#get all centers information
+@app.route('/api/centers', methods=['GET'])
+def api_get_all_centers_information():
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command='SELECT * FROM center;'
+        cursor.execute(sql_command)
+        rows=cursor.fetchall()
+
+        centers=[]
+        for row in rows:
+            center_dict={
+                'centerId':row[0],
+                'name':row[1],
+                'address':row[2],
+                'state':row[3],
+                'contactNo':row[4],
+                'description':row[5],
+                'latitude':row[6],
+                'logitude':row[7],
+                'websiteUrl':row[8],
+                'locationUrl':row[9],
+                'logoPath':row[10],
+            }
+            centers.append(center_dict)
+
+        return jsonify({'centers':centers})
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+#get all centers information based on material
+@app.route('/api/centers/<int:materialId>', methods=['GET'])
+def api_get_all_centers_information_by_materialId(materialId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        # sql_command='SELECT * FROM centerMaterials WHERE materialId = ?;'
+        sql_command='SELECT * FROM center JOIN centerMaterials ON center.centerId=centerMaterials.centerId WHERE centerMaterials.materialId=?;'
+        cursor.execute(sql_command, (materialId,))
+        rows=cursor.fetchall()
+
+        centers=[]
+        for row in rows:
+            center_dict={
+                'centerId':row[0],
+                'name':row[1],
+                'address':row[2],
+                'state':row[3],
+                'contactNo':row[4],
+                'description':row[5],
+                'latitude':row[6],
+                'logitude':row[7],
+                'websiteUrl':row[8],
+                'locationUrl':row[9],
+                'logoPath':row[10],
+            }
+            centers.append(center_dict)
+        
+        cursor.execute('SELECT name FROM materials WHERE materialId =?',(materialId,))
+        materialName=cursor.fetchone()[0]
+
+        response={
+            'materialName':materialName,
+            'centers':centers
+        }
+
+        return jsonify(response)
 
     except Exception as e:
         print('Error:', str(e))

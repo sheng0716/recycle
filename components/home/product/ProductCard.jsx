@@ -5,9 +5,11 @@ import { useRouter } from "expo-router";
 
 //task for this page is complete the material image
 const images = {
-    // 'paper.jpg': require('../../../assets/images/paper.jpg'),
     'paper.png': require('../../../assets/images/paper.png'),
-    // 'glass.jpg': require('../../../assets/images/glass.jpg'),
+    'glass.png': require('../../../assets/images/glass.png'),
+    'glass.png': require('../../../assets/images/glass.png'),
+    'metal.png': require('../../../assets/images/metal.png'),
+    'plastic.png': require('../../../assets/images/plastic.png'),
 }
 
 const imagesDirctory = '../../../assets/images/';
@@ -20,7 +22,12 @@ const ProductCard = ({ item, }) => {
     // };
 
     const handleCardPress = () => {
-        router.push(`/search/${item.id}`);
+        router.push(
+            {
+                pathname: `/search/${item.id}`,
+                params: { materialName: item.name },
+            }
+        );
     }
     return (
 
