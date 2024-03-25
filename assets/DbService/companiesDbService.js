@@ -63,10 +63,12 @@ const getAllCompanyDetailsBycompanyId = async (companyId) => {
 };
 // /api/centers/<int:materialId></int:materialId>
 
-const getCenterDataByMaterialId = async (materialId) => {
+const getCenterDataByMaterialId = async (materialId, page = 1, limit = 10) => {
     try {
-        const response = await axios.get(`${pre_url}/api/centers/${materialId}`);
-        return response.data.centers;
+        const response = await axios.get(`${pre_url}/api/centers/${materialId}`, {
+            params: { page, limit }
+        });
+        return response.data;
     } catch (error) {
         console.error(error);
         throw error;

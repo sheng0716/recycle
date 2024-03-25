@@ -11,15 +11,15 @@ const CardInfo = ({ company, handleNavigate }) => {
       onPress={handleNavigate}
     >
       <TouchableOpacity style={styles.logoContainer}>
-        {/* <Image
+        <Image
           source={{
             uri: checkImageURL(company.logoPath)
               ? company.logoPath
               : "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
           }}
           resizeMode='contain'
-          style={styles.logImage} */}
-        {/* /> */}
+          style={styles.logImage}
+        />
       </TouchableOpacity>
 
       <View style={styles.textContainer}>

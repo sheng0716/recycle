@@ -206,13 +206,16 @@ def api_get_all_centers_information():
 #get all centers information based on material
 @app.route('/api/centers/<int:materialId>', methods=['GET'])
 def api_get_all_centers_information_by_materialId(materialId):
+    page = request.args.get('page', 1, type=int)  # Default to page 1
+    limit = request.args.get('limit', 10, type=int)  # Default to 10 items per page
+    offset = (page - 1) * limit
     try:
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
         # sql_command='SELECT * FROM centerMaterials WHERE materialId = ?;'
-        sql_command='SELECT * FROM center JOIN centerMaterials ON center.centerId=centerMaterials.centerId WHERE centerMaterials.materialId=?;'
-        cursor.execute(sql_command, (materialId,))
+        sql_command='SELECT * FROM center JOIN centerMaterials ON center.centerId=centerMaterials.centerId WHERE centerMaterials.materialId=? LIMIT? OFFSET ?;'
+        cursor.execute(sql_command, (materialId,limit,offset))
         rows=cursor.fetchall()
 
         centers=[]
@@ -232,12 +235,21 @@ def api_get_all_centers_information_by_materialId(materialId):
             }
             centers.append(center_dict)
         
+        count_command='SELECT COUNT(*) FROM center JOIN centerMaterials ON center.centerId=centerMaterials.centerId WHERE centerMaterials.materialId=?;'
+        cursor.execute(count_command, (materialId,))
+        total_count = cursor.fetchone()[0]
+
+        # Calculate total pages
+        total_pages = (total_count + limit - 1) // limit  # Ceiling division
+
         cursor.execute('SELECT name FROM materials WHERE materialId =?',(materialId,))
         materialName=cursor.fetchone()[0]
 
         response={
             'materialName':materialName,
-            'centers':centers
+            'centers':centers,
+            'totalPages':total_pages,
+            'curentPage':page,
         }
 
         return jsonify(response)
