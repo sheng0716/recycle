@@ -65,9 +65,19 @@ const getAllCompanyDetailsBycompanyId = async (companyId) => {
 
 const getCenterDataByMaterialId = async (materialId, page = 1, limit = 10) => {
     try {
-        const response = await axios.get(`${pre_url}/api/centers/${materialId}`, {
+        const response = await axios.get(`${pre_url}/api/centers/material/${materialId}`, {
             params: { page, limit }
         });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+const getCenterDataByCenterId = async (centerId) => {
+    try {
+        const response = await axios.get(`${pre_url}/api/centers/${centerId}`);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -79,5 +89,6 @@ export default {
     getAllRetailer,
     getAllCompanyDetailsBycompanyId,
     getAllCenters,
-    getCenterDataByMaterialId
+    getCenterDataByMaterialId,
+    getCenterDataByCenterId
 };

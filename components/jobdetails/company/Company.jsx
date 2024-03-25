@@ -6,7 +6,7 @@ import { icons } from "../../../constants";
 import { checkImageURL } from "../../../utils";
 //jobTitle = companyName
 //companyName = type (retailer or recycle)
-const Company = ({ companyLogo, companyName, type, location, locationUrl }) => {
+const Company = ({ companyLogo, name, type, location, locationUrl }) => {
 
   const onLocationPress = () => {
     Linking.openURL(locationUrl).catch(err => console.error("An error occurred", err));
@@ -27,7 +27,7 @@ const Company = ({ companyLogo, companyName, type, location, locationUrl }) => {
       </View>
       {/* below is the companyName, ignore the style naming */}
       <View style={styles.jobTitleBox}>
-        <Text style={styles.jobTitle}>{companyName}</Text>
+        <Text style={styles.jobTitle}>{name}</Text>
       </View>
 
       {/*this section show the companyType, state*/}

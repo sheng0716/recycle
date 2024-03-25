@@ -16,6 +16,9 @@ import Specifics from "./jobdetails/specifics/Specifics";
 // common
 import NearbyJobCard from "./common/cards/CardInfo";
 
+//map view component
+import MapView from './map';
+
 export {
   ScreenHeaderBtn,
   Welcome,
@@ -28,4 +31,5 @@ export {
   NearbyJobCard,
   Product,
   Recycle,
+  MapView
 };

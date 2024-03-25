@@ -185,7 +185,7 @@ const SearchResultScreen = () => {
                 renderItem={({ item }) => (
                     <CardInfo
                         company={item}
-                        handleNavigate={() => router.push(`/company-details/${item.centerId}`)}
+                        handleNavigate={() => router.push(`/company-details/recycleDetail/${item.centerId}`)}
                     />
                 )
                 }

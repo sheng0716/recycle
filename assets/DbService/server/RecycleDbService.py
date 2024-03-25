@@ -8,11 +8,20 @@ CORS(app)  # Enable CORS for all routes
 # Define the SQLite database path
 DATABASE = 'recycle_app.db'
 
-def get_row_as_dict(row):
-    row_dict={
-
+def center_dict(row):
+    return {
+        'centerId': row[0],
+        'name': row[1],
+        'address': row[2],
+        'state': row[3],
+        'contactNo': row[4],
+        'description': row[5],
+        'latitude': row[6],
+        'logitude': row[7],
+        'websiteUrl': row[8],
+        'locationUrl': row[9],
+        'logoPath': row[10]
     }
-    return row_dict
 
 # Function to get all company details from the company
 @app.route('/api/companies', methods=['GET'])
@@ -130,7 +139,7 @@ def api_get_company_detail_by_companyId(companyId):
 
         sql_command='SELECT * FROM companies WHERE companyId = ?;'
         cursor.execute(sql_command, (companyId,))
-        company=cursor.fetchone()
+        company=cursor.fetchall()
         return jsonify(company)
 
     except Exception as e:
@@ -174,28 +183,13 @@ def api_get_all_centers_information():
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
-        sql_command='SELECT * FROM center;'
+        sql_command = 'SELECT * FROM center;'
         cursor.execute(sql_command)
-        rows=cursor.fetchall()
+        rows = cursor.fetchall()
 
-        centers=[]
-        for row in rows:
-            center_dict={
-                'centerId':row[0],
-                'name':row[1],
-                'address':row[2],
-                'state':row[3],
-                'contactNo':row[4],
-                'description':row[5],
-                'latitude':row[6],
-                'logitude':row[7],
-                'websiteUrl':row[8],
-                'locationUrl':row[9],
-                'logoPath':row[10],
-            }
-            centers.append(center_dict)
+        centers = [center_dict(row) for row in rows]
 
-        return jsonify({'centers':centers})
+        return jsonify({'centers': centers})
 
     except Exception as e:
         print('Error:', str(e))
@@ -203,8 +197,39 @@ def api_get_all_centers_information():
     finally:
         conn.close()
 
+
+
+#get one center information by centerId
+@app.route('/api/centers/<int:centerId>', methods=['GET'])
+def api_get_center_info_by_centerId(centerId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command = 'SELECT * FROM center WHERE centerId=?;'
+        cursor.execute(sql_command,(centerId,))
+        row = cursor.fetchone()
+
+        if row:
+            center = center_dict(row)
+            return jsonify(center)  # Return a single center object directly
+        else:
+            return jsonify({"error": "Center not found"}), 404
+
+        # rows = cursor.fetchall()
+
+        # centers = [center_dict(row) for row in rows]
+
+        # return jsonify({'centers': centers})
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+
 #get all centers information based on material
-@app.route('/api/centers/<int:materialId>', methods=['GET'])
+@app.route('/api/centers/material/<int:materialId>', methods=['GET'])
 def api_get_all_centers_information_by_materialId(materialId):
     page = request.args.get('page', 1, type=int)  # Default to page 1
     limit = request.args.get('limit', 10, type=int)  # Default to 10 items per page
@@ -218,22 +243,7 @@ def api_get_all_centers_information_by_materialId(materialId):
         cursor.execute(sql_command, (materialId,limit,offset))
         rows=cursor.fetchall()
 
-        centers=[]
-        for row in rows:
-            center_dict={
-                'centerId':row[0],
-                'name':row[1],
-                'address':row[2],
-                'state':row[3],
-                'contactNo':row[4],
-                'description':row[5],
-                'latitude':row[6],
-                'logitude':row[7],
-                'websiteUrl':row[8],
-                'locationUrl':row[9],
-                'logoPath':row[10],
-            }
-            centers.append(center_dict)
+        centers = [center_dict(row) for row in rows]
         
         count_command='SELECT COUNT(*) FROM center JOIN centerMaterials ON center.centerId=centerMaterials.centerId WHERE centerMaterials.materialId=?;'
         cursor.execute(count_command, (materialId,))
@@ -260,6 +270,43 @@ def api_get_all_centers_information_by_materialId(materialId):
     finally:
         conn.close()
         
+# #get all centers information
+# @app.route('/api/centers', methods=['GET'])
+# def api_get_all_centers_information():
+#     try:
+#         conn = sqlite3.connect(DATABASE)
+#         cursor = conn.cursor()
+
+#         sql_command='SELECT * FROM center;'
+#         cursor.execute(sql_command)
+#         rows=cursor.fetchall()
+
+#         centers=[]
+#         for row in rows:
+#             center_dict={
+#                 'centerId':row[0],
+#                 'name':row[1],
+#                 'address':row[2],
+#                 'state':row[3],
+#                 'contactNo':row[4],
+#                 'description':row[5],
+#                 'latitude':row[6],
+#                 'logitude':row[7],
+#                 'websiteUrl':row[8],
+#                 'locationUrl':row[9],
+#                 'logoPath':row[10],
+#             }
+#             centers.append(center_dict)
+
+#         return jsonify({'centers':centers})
+
+#     except Exception as e:
+#         print('Error:', str(e))
+#         return jsonify({'error': str(e)}), 500
+#     finally:
+#         conn.close()
+        
+
 # Function to get book_id by user_id from bookshelves
 
 # @app.route('/api/bookshelves/<int:user_id>', methods=['GET'])
