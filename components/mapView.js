@@ -6,12 +6,15 @@ import { StyleSheet, Dimensions } from 'react-native';
 // import styles from './map.style'
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     map: {
-        width: 20,
-        // width: Dimensions.get('window').width,
-        height: 300, // Set the height of the map
+        width: '100%',
+        height: '100%',
     },
 });
+
 const MapViewScreen = ({ location }) => {
     return (
         <View>

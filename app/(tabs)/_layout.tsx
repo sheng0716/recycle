@@ -30,6 +30,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="location"
                 options={{
+                    href: null,//will not show on tabs
                     title: 'Location',
                     tabBarIcon: ({ color }) => <FontAwesome size={28} name="map" color={color} />,
                 }}

@@ -1,4 +1,4 @@
-import { Stack, useRouter, useLocalSearchParams } from "expo-router";
+import { Stack, useRouter, useLocalSearchParams, useNavigation, Link } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import {
     View,
@@ -7,6 +7,7 @@ import {
     ScrollView,
     ActivityIndicator,
     RefreshControl,
+    TouchableOpacity,
 } from "react-native";
 
 import {
@@ -27,6 +28,9 @@ const tabs = ["About", "Qualifications", "Location"];
 
 const recycleDetail = () => {
     const params = useLocalSearchParams();
+
+    const navigation = useNavigation();
+
     const router = useRouter();
     const [centerData, setCenterData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -106,16 +110,40 @@ const recycleDetail = () => {
 
             case "Location":
                 return (
-                    <MapView
-                        // title='Responsibilities'
-                        // points={data[0].job_highlights?.Responsibilities ?? ["N/A"]}
-                        location={{
-                            latitude: centerData.latitude,
-                            longitude: centerData.longitude,
-                            name: centerData.name,
-                            address: centerData.address
-                        }}
-                    />
+                    // <MapView
+                    //     // title='Responsibilities'
+                    //     // points={data[0].job_highlights?.Responsibilities ?? ["N/A"]}
+                    //     location={{
+                    //         latitude: centerData.latitude,
+                    //         longitude: centerData.longitude,
+                    //         name: centerData.name,
+                    //         address: centerData.address
+                    //     }}
+                    // />
+                    // router.push({
+                    //     pathname: '/map',
+                    // }
+                    <View>
+                        <Text>{centerData.latitude}</Text>
+                        <Text>{centerData.longitude}</Text>
+
+                        <View>
+
+                            <TouchableOpacity onPress={() => {
+                                router.push({
+                                    pathname: '/map',
+                                    params: {
+                                        latitude: centerData.latitude,
+                                        longitude: centerData.longitude
+                                    }
+                                }
+                                )
+                                // <Link href={{ pathname: 'map', params: { latitude: centerData.latitude, longitude: centerData.longitude } }}></Link>
+                            }}>
+                                <Text style={{ padding: 20, backgroundColor: 'skyblue', textAlign: 'center' }}>View Map</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View >
                 );
 
             default:

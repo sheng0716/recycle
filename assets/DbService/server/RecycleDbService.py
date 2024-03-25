@@ -17,7 +17,7 @@ def center_dict(row):
         'contactNo': row[4],
         'description': row[5],
         'latitude': row[6],
-        'logitude': row[7],
+        'longitude': row[7],
         'websiteUrl': row[8],
         'locationUrl': row[9],
         'logoPath': row[10]

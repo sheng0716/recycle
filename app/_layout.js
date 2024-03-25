@@ -1,4 +1,5 @@
 import { Stack } from "expo-router";
+
 import { Drawer } from "expo-router/drawer";
 import { useFonts } from "expo-font";
 // import * as SplashScreen from "expo-splash-screen";
