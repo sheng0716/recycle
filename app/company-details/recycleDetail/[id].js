@@ -136,7 +136,8 @@ const recycleDetail = () => {
                                     params: {
                                         latitude: centerData.latitude,
                                         longitude: centerData.longitude,
-                                        name: centerData.name,
+                                        centerName: centerData.name,
+
                                     }
                                 }
                                 )

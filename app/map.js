@@ -9,7 +9,7 @@ import axios from "axios";
 const map = () => {
     //this is utar location
     // 3.0398872684355758, 101.79468236116317
-    const { latitude: stringLatitude, longitude: stringLongitude } = useLocalSearchParams();
+    const { latitude: stringLatitude, longitude: stringLongitude, centerName } = useLocalSearchParams();
     console.log('centerName:', ' String: latitude:', stringLatitude, ' longitude', stringLongitude);
 
     const defaultLatitude = 34.0522; // Example default latitude
@@ -72,7 +72,8 @@ const map = () => {
 
                 <Marker coordinate={{ latitude: latitude, longitude: longitude }} title="Target">
                     <Callout>
-                        <Text>{data.DistanceInKm} Km</Text>
+                        <Text>{centerName}</Text>
+                        <Text>{data.DistanceInKm} KM</Text>
                     </Callout>
                 </Marker>
             </MapView>
