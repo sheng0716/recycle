@@ -1,5 +1,7 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { React, useState, useEffect } from 'react';
+import * as eva from '@eva-design/eva';
+import { Layout, Icon, ApplicationProvider } from '@ui-kitten/components';
 
 const ProfileScreen = () => {
 
@@ -43,106 +45,122 @@ const ProfileScreen = () => {
     // }, [route.params]); // Ensures it runs once isMember in route.params changed
 
     const handleChange = (key, value) => {
-        setUserData((prevData) => ({
-            ...prevData,
-            [key]: value,
-        }));
+        // setUserData((prevData) => ({
+        //     ...prevData,
+        //     [key]: value,
+        // }));
     };
 
+    const handleSaveProcess = async () => {
+        //function for click on save icon
+        // setIsEditable(false);
+
+        // await UsersDbService.updateUser(userId, userData);
+
+        // Alert.alert("Profile Saving", "Saved Successfully");
+    }
+
     return (
-        <ScrollView>
+        <ApplicationProvider {...eva} theme={eva.light}>
+            <ScrollView>
 
-            <View>
-                <Text>This is profile</Text>
-            </View>
-            <Layout style={styles.container}>
-                <View style={styles.topBar}>
-                    <Text style={styles.title}>Welcome, {userData.username}</Text>
-
-                    <TouchableOpacity onPress={navSetting}>
-                        <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
-                            name='settings-2-outline'
-                        />
-                    </TouchableOpacity>
+                <View>
+                    <Text>This is profile</Text>
                 </View>
+                <Layout style={styles.container}>
+                    <View style={styles.topBar}>
+                        <Text style={styles.title}>Welcome, {userData.username}</Text>
 
-
-                <View style={{ alignItems: 'center' }}>
-                    <UserAvatar size={100} name={userData.username} style={{ width: 100, height: 100, borderRadius: 100, marginTop: 0 }} />
-
-                    <View style={{ alignItems: 'center', flexDirection: "row" }}>
-                        <Text style={styles.userName}>{userData.username}</Text>
-
-                        {userData.isMember ? (
-                            <TouchableOpacity onPress={navMember}>
-                                <Icon
-                                    style={{ width: 40, height: 45, marginLeft: 10, marginBottom: -10 }}
-                                    name="cube"
-                                />
-                            </TouchableOpacity>
-                        ) : (
-                            <TouchableOpacity onPress={navMember}>
-                                <Icon
-                                    style={{ width: 40, height: 45, marginLeft: 10, marginBottom: -10 }}
-                                    name="cube-outline"
-                                />
-                            </TouchableOpacity>
-                        )}
+                        <TouchableOpacity onPress={() => { }}>
+                            {/* <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
+                                name='settings-2-outline'
+                            /> */}
+                            <Text>Settings</Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <Text style={styles.email}>{userData.email}</Text>
 
-                </View>
+                    <View style={{ alignItems: 'center' }}>
+                        {/* <UserAvatar size={100} name={userData.username} style={{ width: 100, height: 100, borderRadius: 100, marginTop: 0 }} /> */}
 
-                <View style={styles.editSave}>
-                    <TouchableOpacity onPress={handleEditProcess}>
-                        <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
-                            name='edit-outline'
+                        <View style={{ alignItems: 'center', flexDirection: "row" }}>
+                            <Text style={styles.userName}>{userData.username}</Text>
+                            {/* below onPress is put navMember inside */}
+                            {userData.isMember ? (
+                                <TouchableOpacity onPress={() => { }}>
+                                    {/* <Icon
+                                        style={{ width: 40, height: 45, marginLeft: 10, marginBottom: -10 }}
+                                        name="cube"
+                                    /> */}
+                                    <Text>Cube</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity onPress={() => { }}>
+                                    {/* <Icon
+                                        style={{ width: 40, height: 45, marginLeft: 10, marginBottom: -10 }}
+                                        name="cube-outline"
+                                    /> */}
+                                    <Text>Cube-outline</Text>
+                                </TouchableOpacity>
+                            )}
+                        </View>
+
+                        <Text style={styles.email}>{userData.email}</Text>
+
+                    </View>
+
+                    <View style={styles.editSave}>
+                        <TouchableOpacity onPress={handleEditProcess}>
+                            {/* <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
+                                name='edit-outline'
+                            /> */}
+                            <Text>edit-outline</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={handleSaveProcess}>
+                            {/* <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
+                                name='save-outline'
+                            /> */}
+                            <Text>save-outline</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* Subcontainer that contained all the personal information */}
+                    <View style={styles.subcontainer}>
+                        <Text style={styles.subTitle}>Username:</Text>
+                        <TextInput
+                            style={styles.inputText}
+                            value={userData.username}
+                            onChangeText={(text) => handleChange('username', text)}
+                            editable={isEditable}
                         />
-                    </TouchableOpacity>
+                        <View style={styles.hrLine} />
 
-                    <TouchableOpacity onPress={handleSaveProcess}>
-                        <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
-                            name='save-outline'
+                        <Text style={styles.subTitle}>Email:</Text>
+                        <TextInput
+                            style={styles.inputText}
+                            keyboardType='email-address'
+                            value={userData.email}
+                            onChangeText={(text) => handleChange('email', text)}
+                            editable={isEditable}
                         />
-                    </TouchableOpacity>
-                </View>
+                        <View style={styles.hrLine} />
 
-                {/* Subcontainer that contained all the personal information */}
-                <View style={styles.subcontainer}>
-                    <Text style={styles.subTitle}>Username:</Text>
-                    <TextInput
-                        style={styles.inputText}
-                        value={userData.username}
-                        onChangeText={(text) => handleChange('username', text)}
-                        editable={isEditable}
-                    />
-                    <View style={styles.hrLine} />
+                        <Text style={styles.subTitle}>Phone Number:</Text>
+                        <TextInput
+                            style={styles.inputText}
+                            keyboardType='phone-pad'
+                            value={userData.phoneNumber}
+                            onChangeText={(text) => handleChange('phoneNumber', text)}
+                            editable={isEditable}
+                        />
+                        <View style={styles.hrLine} />
 
-                    <Text style={styles.subTitle}>Email:</Text>
-                    <TextInput
-                        style={styles.inputText}
-                        keyboardType='email-address'
-                        value={userData.email}
-                        onChangeText={(text) => handleChange('email', text)}
-                        editable={isEditable}
-                    />
-                    <View style={styles.hrLine} />
+                    </View>
 
-                    <Text style={styles.subTitle}>Phone Number:</Text>
-                    <TextInput
-                        style={styles.inputText}
-                        keyboardType='phone-pad'
-                        value={userData.phoneNumber}
-                        onChangeText={(text) => handleChange('phoneNumber', text)}
-                        editable={isEditable}
-                    />
-                    <View style={styles.hrLine} />
-
-                </View>
-
-            </Layout>
-        </ScrollView>
+                </Layout>
+            </ScrollView>
+        </ApplicationProvider>
     )
 }
 const styles = StyleSheet.create({
