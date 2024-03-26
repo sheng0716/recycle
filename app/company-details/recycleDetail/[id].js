@@ -124,6 +124,7 @@ const recycleDetail = () => {
                     //     pathname: '/map',
                     // }
                     <View>
+                        <Text>{centerData.name}</Text>
                         <Text>{centerData.latitude}</Text>
                         <Text>{centerData.longitude}</Text>
 
@@ -134,7 +135,8 @@ const recycleDetail = () => {
                                     pathname: '/map',
                                     params: {
                                         latitude: centerData.latitude,
-                                        longitude: centerData.longitude
+                                        longitude: centerData.longitude,
+                                        name: centerData.name,
                                     }
                                 }
                                 )
