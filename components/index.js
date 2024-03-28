@@ -11,7 +11,6 @@ import Company from "./jobdetails/company/Company";
 import { default as Tabs } from "./jobdetails/tabs/Tabs";
 import { default as About } from "./jobdetails/about/About";
 import { default as Footer } from "./jobdetails/footer/Footer";
-import MaterialTab from "./jobdetails/MaterialTab/MaterialTab";
 
 // common
 import NearbyJobCard from "./common/cards/CardInfo";
@@ -25,7 +24,6 @@ export {
   Tabs,
   About,
   Footer,
-  MaterialTab,
   NearbyJobCard,
   Product,
   Recycle,

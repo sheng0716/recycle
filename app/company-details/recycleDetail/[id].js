@@ -8,6 +8,7 @@ import {
     ActivityIndicator,
     RefreshControl,
     TouchableOpacity,
+    FlatList
 } from "react-native";
 
 import {
@@ -23,6 +24,8 @@ import { COLORS, icons, SIZES } from "../../../constants";
 // import companiesDbService from "../../assets/DbService/companiesDbService";
 import useFetchByCompanyId from "../../../hook/useFetchByCompanyId";
 import companiesDbService from "../../../assets/DbService/companiesDbService";
+import productDbService from "../../../assets/DbService/productDbService";
+import MaterialCard from "../../../components/jobdetails/MaterialTab/MaterialCard";
 
 const tabs = ["About", "Materials", "Location"];
 
@@ -35,6 +38,7 @@ const recycleDetail = () => {
     const [centerData, setCenterData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [acceptMaterial, setAcceptMaterial] = useState([]);//use to store what material the center accept
 
     // const { data, isLoading, error, refetch } = useFetch("job-details", {
     //     job_id: params.id,
@@ -53,7 +57,7 @@ const recycleDetail = () => {
     //     }
     // };
 
-    const c_id = params.id;
+    const c_id = params.id;// this is the company id, later will will use to find materials from center materials pivot table
     // const { data, isLoading, error, refetch } = useFetchByCompanyId('/api/centers', c_id)
 
     const fetchCenterData = async () => {
@@ -61,7 +65,21 @@ const recycleDetail = () => {
         try {
             const centerData = await companiesDbService.getCenterDataByCenterId(c_id);
             setCenterData(centerData);
-            console.log(centerData);
+            console.log('Center Information: ', centerData);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+    const fetchAcceptedMaterialData = async () => {
+        setIsLoading(true);
+        try {
+            const acceptedMaterials = await productDbService.getAcceptedMaterialByCenterId(c_id);
+            setAcceptMaterial(acceptedMaterials);
+            console.log('Accepted Material: ', acceptMaterial);
             setIsLoading(false);
         } catch (error) {
             setError(error);
@@ -72,11 +90,13 @@ const recycleDetail = () => {
     }
     useEffect(() => {
         fetchCenterData();
+        fetchAcceptedMaterialData();
     }, [])
 
     const refetch = () => {
         setIsLoading(true);
         fetchCenterData();
+        fetchAcceptedMaterialData();
     };
 
     const companyName = centerData.name;
@@ -101,10 +121,18 @@ const recycleDetail = () => {
 
             case "Materials":
                 return (
-                    <MaterialTab
-                    // title='Qualifications'
-                    // points={data[0].job_highlights?.Qualifications ?? ["N/A"]}
-                    />
+                    <View>
+                        <FlatList
+                            scrollEnabled={false}
+                            numColumns={2}
+                            data={acceptMaterial}
+                            renderItem={({ item }) =>
+                                <MaterialCard
+                                    item={item}
+                                />
+                            }
+                        />
+                    </View>
                 );
 
 

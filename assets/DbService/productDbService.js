@@ -42,8 +42,19 @@ const getAllCenterByMaterialId = async (materialId) => {
     }
 
 };
+const getAcceptedMaterialByCenterId = async (centerId) => {
+    try {
+        const response = await axios.get(`${pre_url}/api/acceptedMaterials/centerId=${centerId}`);
+        return response.data.materials;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+
+};
 
 export default {
     getAllMaterials,
     getAllCenterByMaterialId,
+    getAcceptedMaterialByCenterId,
 }

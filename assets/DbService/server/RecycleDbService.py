@@ -270,6 +270,34 @@ def api_get_all_centers_information_by_materialId(materialId):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
+
+# get All accept material by centerId
+@app.route('/api/acceptedMaterials/centerId=<int:centerId>', methods=['GET'])
+def api_get_all_accepted_materials_by_centerId(centerId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command = "SELECT materials.materialId, materials.name,materials.imageUrl FROM centerMaterials JOIN materials ON centerMaterials.materialId = materials.materialId WHERE centerMaterials.centerId=?;"
+        cursor.execute(sql_command,(centerId,))
+        rows = cursor.fetchall()
+
+        accepted_materials = []
+        for row in rows:
+            accepted_material_dict = {
+                'materialId': row[0],
+                'name': row[1],
+                'imageUrl':row[2],
+            }
+            accepted_materials.append(accepted_material_dict)
+
+        return jsonify({'materials': accepted_materials})
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
         
 # #get all centers information
 # @app.route('/api/centers', methods=['GET'])
