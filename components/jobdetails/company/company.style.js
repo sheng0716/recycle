@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     tintColor: COLORS.gray,
   },
   locationName: {
-    fontSize: SIZES.medium - 2,
+    fontSize: SIZES.large - 4,
     color: COLORS.gray,
     fontFamily: FONT.regular,
     marginLeft: 2,

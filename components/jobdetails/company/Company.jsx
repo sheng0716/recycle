@@ -6,7 +6,7 @@ import { icons } from "../../../constants";
 import { checkImageURL } from "../../../utils";
 //jobTitle = companyName
 //companyName = type (retailer or recycle)
-const Company = ({ companyLogo, name, type, location, locationUrl }) => {
+const Company = ({ companyLogo, name, location, locationUrl }) => {
 
   const onLocationPress = () => {
     Linking.openURL(locationUrl).catch(err => console.error("An error occurred", err));
@@ -33,7 +33,7 @@ const Company = ({ companyLogo, name, type, location, locationUrl }) => {
       {/*this section show the companyType, state*/}
       <View style={styles.companyInfoBox}>
 
-        <Text style={styles.companyName}>{type} / </Text>
+        <Text style={styles.companyName}> Recycling Center/ </Text>
 
         <TouchableOpacity onPress={onLocationPress}>
           <View style={styles.locationBox}>
@@ -42,6 +42,7 @@ const Company = ({ companyLogo, name, type, location, locationUrl }) => {
               resizeMode='contain'
               style={styles.locationImage}
             />
+            {/* state, selangor */}
             <Text style={styles.locationName}>{location}</Text>
           </View>
         </TouchableOpacity>

@@ -185,7 +185,7 @@ const recycleDetail = () => {
                     headerRight: () => (
                         <ScreenHeaderBtn iconUrl={icons.share} dimension='60%' />
                     ),
-                    headerTitle: "",
+                    headerTitle: "Center Info",
                 }}
             />
 
@@ -210,11 +210,11 @@ const recycleDetail = () => {
                             <Company
                                 companyLogo={centerData.logoPath}
                                 name={centerData.name}
-                            // companyLogo={data.logoPath}
-                            // type={data.type}
-                            // companyName={data.name}
-                            // location={data.state}
-                            // locationUrl={data.locationUrl}
+                                // companyLogo={data.logoPath}
+                                // type={data.type}
+
+                                location={centerData.state}
+                                locationUrl={centerData.locationUrl}
                             />
 
                             <Tabs
@@ -228,7 +228,7 @@ const recycleDetail = () => {
                     )}
                 </ScrollView>
 
-                {/* <Footer url={data[0]?.job_google_link ?? 'https://careers.google.com/jobs/results/'} /> */}
+                <Footer url={centerData?.websiteUrl ?? 'https://careers.google.com/jobs/results/'} />
             </>
         </SafeAreaView>
     );
