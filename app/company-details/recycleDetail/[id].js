@@ -12,19 +12,19 @@ import {
 
 import {
     Company,
-    JobAbout,
-    JobFooter,
-    JobTabs,
+    About,
+    Footer,
+    Tabs,
     ScreenHeaderBtn,
-    Specifics,
     MapView,
+    MaterialTab,
 } from "../../../components";
 import { COLORS, icons, SIZES } from "../../../constants";
 // import companiesDbService from "../../assets/DbService/companiesDbService";
 import useFetchByCompanyId from "../../../hook/useFetchByCompanyId";
 import companiesDbService from "../../../assets/DbService/companiesDbService";
 
-const tabs = ["About", "Qualifications", "Location"];
+const tabs = ["About", "Materials", "Location"];
 
 const recycleDetail = () => {
     const params = useLocalSearchParams();
@@ -93,15 +93,15 @@ const recycleDetail = () => {
         switch (activeTab) {
             case "About":
                 return (
-                    <JobAbout
+                    <About
                         info={centerData.description ?? "No data provided"}
 
                     />
                 );
 
-            case "Qualifications":
+            case "Materials":
                 return (
-                    <Specifics
+                    <MaterialTab
                     // title='Qualifications'
                     // points={data[0].job_highlights?.Qualifications ?? ["N/A"]}
                     />
@@ -110,19 +110,6 @@ const recycleDetail = () => {
 
             case "Location":
                 return (
-                    // <MapView
-                    //     // title='Responsibilities'
-                    //     // points={data[0].job_highlights?.Responsibilities ?? ["N/A"]}
-                    //     location={{
-                    //         latitude: centerData.latitude,
-                    //         longitude: centerData.longitude,
-                    //         name: centerData.name,
-                    //         address: centerData.address
-                    //     }}
-                    // />
-                    // router.push({
-                    //     pathname: '/map',
-                    // }
                     <View>
                         <Text>{centerData.name}</Text>
                         <Text>{centerData.latitude}</Text>
@@ -141,12 +128,11 @@ const recycleDetail = () => {
                                     }
                                 }
                                 )
-                                // <Link href={{ pathname: 'map', params: { latitude: centerData.latitude, longitude: centerData.longitude } }}></Link>
                             }}>
                                 <Text style={{ padding: 20, backgroundColor: 'skyblue', textAlign: 'center' }}>View Map</Text>
                             </TouchableOpacity>
                         </View>
-                    </View >
+                    </View>
                 );
 
             default:
@@ -203,7 +189,7 @@ const recycleDetail = () => {
                             // locationUrl={data.locationUrl}
                             />
 
-                            <JobTabs
+                            <Tabs
                                 tabs={tabs}
                                 activeTab={activeTab}
                                 setActiveTab={setActiveTab}
@@ -214,7 +200,7 @@ const recycleDetail = () => {
                     )}
                 </ScrollView>
 
-                {/* <JobFooter url={data[0]?.job_google_link ?? 'https://careers.google.com/jobs/results/'} /> */}
+                {/* <Footer url={data[0]?.job_google_link ?? 'https://careers.google.com/jobs/results/'} /> */}
             </>
         </SafeAreaView>
     );

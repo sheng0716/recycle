@@ -13,13 +13,16 @@ const images = {
 }
 
 const imagesDirctory = '../../../assets/images/';
-const ProductCard = ({ item, }) => {
+const ProductCard = ({ item }) => {
     const router = useRouter();
     const imageSource = images[item.image];
     // const imageSource = require('../../../assets/images/' + item.image);
     // const handlePress = () => {
     //     // router.push(`/search/${item}`, { materialId: item.materialId });
     // };
+
+    //store the imageUrl inside the variable
+    const imageUrl = item.imageUrl;
 
     const handleCardPress = () => {
         router.push(
@@ -30,8 +33,6 @@ const ProductCard = ({ item, }) => {
         );
     }
     return (
-
-
         <TouchableOpacity
             style={styles.item}
         >
@@ -40,19 +41,13 @@ const ProductCard = ({ item, }) => {
                 <TouchableOpacity style={styles.logoContainer} onPress={handleCardPress}>
                     <Image
                         style={styles.logoImage}
-                        source={imageSource} />
+                        source={{ uri: imageUrl }}
+                    />
                 </TouchableOpacity>
 
                 <Text>{item.id}.{item.name}</Text>
             </View>
-
-            <Image
-            // source={{ uri: 'assets/images/' + item.image }}
-            // source={{ uri: 'https://duet-cdn.vox-cdn.com/thumbor/0x0:2012x1341/640x427/filters:focal(1006x670:1007x671):format(webp)/cdn.vox-cdn.com/uploads/chorus_asset/file/15483559/google2.0.0.1441125613.jpg' }}
-            // style={styles.image} 
-
-            />
-        </TouchableOpacity >
+        </TouchableOpacity>
 
     )
 }

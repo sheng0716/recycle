@@ -117,7 +117,8 @@ def api_get_all_materials():
                 'id': row[0],
                 'name': row[1],
                 'description': row[2],
-                'image': row[3]
+                'image': row[3],
+                'imageUrl': row[4]
             }
             materials.append(material_dict)
 

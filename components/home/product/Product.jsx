@@ -16,7 +16,7 @@ const Product = () => {
         try {
             const materialData = await materialDbService.getAllMaterials();
             setMaterials(materialData);
-            console.log(materials);
+            console.log('All Material Data: ', materials);
         } catch (error) {
             console.error('error fetching data from database', error);
         }
@@ -25,9 +25,6 @@ const Product = () => {
         fetchMaterials();
     }, []);
 
-    // const handleCardPress = (item) => {
-    //     router.push('/search/${item.id}');
-    // }
     return (
         <View>
             <Text style={{

@@ -244,7 +244,9 @@ const SearchResultScreen = () => {
                     </View>
                 )}
             /> */}
+
         </SafeAreaView>
+
     )
 }
 
