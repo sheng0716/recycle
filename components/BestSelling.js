@@ -39,9 +39,7 @@ const BestSelling = () => {
     console.log('Best Selling Item: ', bestSellItem)
     const router = useRouter();
 
-    const handleCardPress = () => {
 
-    }
 
 
     return (
@@ -59,7 +57,6 @@ const BestSelling = () => {
                 renderItem={({ item }) => (
                     <BestSellingCard
                         item={item}
-                        handlePress={handleCardPress}
                     />
 
                 )}

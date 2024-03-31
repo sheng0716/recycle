@@ -311,6 +311,21 @@ def product_dict(row):
         'category': row[5],
         'retailerId': row[6],
     }
+
+def retailer_dict(row):
+    return {
+        'retailerId': row[0],
+        'name': row[1],
+        'address': row[2],
+        'state': row[3],
+        'contactNo': row[4],
+        'description': row[5],
+        'latitude': row[6],
+        'longitude': row[7],
+        'websiteUrl': row[8],
+        'locationUrl': row[9],
+        'logoPath': row[10],
+    }
 #Get All product data
 @app.route('/api/products', methods=['GET'])
 def api_get_all_products_information():
@@ -331,7 +346,30 @@ def api_get_all_products_information():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-  
+
+
+#Get retailer Info by productId
+@app.route('/api/retailer/<int:retailerId>', methods=['GET'])
+def api_get_retailer_information_by_retailerId(retailerId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command='SELECT * FROM retailers WHERE retailerId=?;'
+        cursor.execute(sql_command,(retailerId,))
+        row=cursor.fetchone()
+
+        if row:
+            retailer=retailer_dict(row)
+            return jsonify(retailer)
+        else:
+            return jsonify({'error':"retailer not found"}),404
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
 
 # #get all centers information
 # @app.route('/api/centers', methods=['GET'])

@@ -6,11 +6,16 @@ import { icons } from "../../../constants";
 import { checkImageURL } from "../../../utils";
 //jobTitle = companyName
 //companyName = type (retailer or recycle)
-const Company = ({ companyLogo, name, location, locationUrl }) => {
+const Company = ({ companyLogo, name, location, locationUrl, contact }) => {
 
   const onLocationPress = () => {
     Linking.openURL(locationUrl).catch(err => console.error("An error occurred", err));
   };
+
+  const logoImage = { companyLogo }
+
+  console.log('Logo path: ', { companyLogo })
+
 
   return (
     <View style={styles.container}>
@@ -28,27 +33,30 @@ const Company = ({ companyLogo, name, location, locationUrl }) => {
       {/* below is the companyName, ignore the style naming */}
       <View style={styles.jobTitleBox}>
         <Text style={styles.jobTitle}>{name}</Text>
+        <Text style={styles.jobTitle}>{companyLogo}</Text>
       </View>
 
       {/*this section show the companyType, state*/}
       <View style={styles.companyInfoBox}>
 
         <Text style={styles.companyName}> Recycling Center/ </Text>
-
-        <TouchableOpacity onPress={onLocationPress}>
-          <View style={styles.locationBox}>
-            <Image
-              source={icons.location}
-              resizeMode='contain'
-              style={styles.locationImage}
-            />
-            {/* state, selangor */}
-            <Text style={styles.locationName}>{location}</Text>
-          </View>
-        </TouchableOpacity>
-
+        <Text style={styles.companyName}> {contact} </Text>
       </View>
-    </View >
+
+
+      <TouchableOpacity onPress={onLocationPress}>
+        <View style={styles.locationBox}>
+          <Image
+            source={icons.location}
+            resizeMode='contain'
+            style={styles.locationImage}
+          />
+          {/* state, selangor */}
+          <Text style={styles.locationName}>{location} Click to the Direction</Text>
+        </View>
+      </TouchableOpacity>
+
+    </View>
   );
 };
 

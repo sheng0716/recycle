@@ -84,11 +84,22 @@ const getCenterDataByCenterId = async (centerId) => {
         throw error;
     }
 }
+const getRetailerDataByRetailerId = async (retailerId) => {
+    try {
+        const response = await axios.get(`${pre_url}/api/retailer/${retailerId}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 export default {
     getAllCompanies,
     getAllRetailer,
     getAllCompanyDetailsBycompanyId,
     getAllCenters,
     getCenterDataByMaterialId,
-    getCenterDataByCenterId
+    getCenterDataByCenterId,
+    getRetailerDataByRetailerId,
 };

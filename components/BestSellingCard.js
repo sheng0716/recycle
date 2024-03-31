@@ -1,31 +1,46 @@
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { COLORS } from "../constants";
+import { useRouter } from "expo-router";
 
 
-const BestSellingCard = ({ item, handlePress }) => {
+const BestSellingCard = ({ item }) => {
+
+    const router = useRouter();
+
+    const handleCardPress = () => {
+        router.push(
+            {
+                pathname: `/company-details/retailerDetail/${item.retailerId}`,
+                // params: {},
+            }
+        )
+    }
 
     console.log('In Best Selling Card: ', item)
     const itemImage = item.imagePath;
 
     return (
-        <TouchableOpacity>
 
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <TouchableOpacity onPress={handleCardPress}>
                 <Image
                     source={{ uri: itemImage }}
                     style={styles.image}
 
                 />
-                <View style={styles.infoContainer}>
 
-                    <Text style={{ fontSize: 17, }}>{item.name}</Text>
-                    <Text style={{ fontSize: 15, }}>RM {item.price}</Text>
-                    <Text style={{ fontSize: 13, padding: 3, color: COLORS.primary }}>{item.quantity} pcs</Text>
-                </View>
+            </TouchableOpacity>
+            <View style={styles.infoContainer}>
 
+                <Text style={{ fontSize: 17, }}>THIS IS RETAILER ID {item.retailerId}</Text>
+                <Text style={{ fontSize: 17, }}>{item.name}</Text>
+                <Text style={{ fontSize: 15, }}>RM {item.price}</Text>
+                <Text style={{ fontSize: 13, padding: 3, color: COLORS.primary }}>{item.quantity} pcs</Text>
             </View>
-        </TouchableOpacity>
+
+        </View>
+
 
     )
 }
