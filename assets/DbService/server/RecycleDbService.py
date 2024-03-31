@@ -299,6 +299,40 @@ def api_get_all_accepted_materials_by_centerId(centerId):
     finally:
         conn.close()
         
+
+###Below is about retailer#####################################################################
+def product_dict(row):
+    return {
+        'productId': row[0],
+        'name': row[1],
+        'price': row[2],
+        'quantity': row[3],
+        'imagePath': row[4],
+        'category': row[5],
+        'retailerId': row[6],
+    }
+#Get All product data
+@app.route('/api/products', methods=['GET'])
+def api_get_all_products_information():
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command = 'SELECT * FROM products;'
+        cursor.execute(sql_command)
+        rows = cursor.fetchall()
+
+        products = [product_dict(row) for row in rows]
+
+        return jsonify({'products': products})
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+  
+
 # #get all centers information
 # @app.route('/api/centers', methods=['GET'])
 # def api_get_all_centers_information():

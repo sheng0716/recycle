@@ -15,6 +15,9 @@ import { default as Footer } from "./jobdetails/footer/Footer";
 // common
 import NearbyJobCard from "./common/cards/CardInfo";
 
+import BestSelling from "./BestSelling";
+import BestSellingCard from "./BestSellingCard";
+
 
 export {
   ScreenHeaderBtn,
@@ -27,4 +30,6 @@ export {
   NearbyJobCard,
   Product,
   Recycle,
+  BestSelling,
+  BestSellingCard
 };
