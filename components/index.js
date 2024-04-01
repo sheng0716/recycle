@@ -17,6 +17,7 @@ import NearbyJobCard from "./common/cards/CardInfo";
 
 import BestSelling from "./BestSelling";
 import BestSellingCard from "./BestSellingCard";
+import RetailerProductCard from "./RetailerProductCard";
 
 
 export {
@@ -31,5 +32,6 @@ export {
   Product,
   Recycle,
   BestSelling,
-  BestSellingCard
+  BestSellingCard,
+  RetailerProductCard,
 };

@@ -210,8 +210,7 @@ const recycleDetail = () => {
                             <Company
                                 companyLogo={centerData.logoPath}
                                 name={centerData.name}
-                                // companyLogo={data.logoPath}
-                                // type={data.type}
+                                type='Recycling Center'
 
                                 location={centerData.state}
                                 locationUrl={centerData.locationUrl}

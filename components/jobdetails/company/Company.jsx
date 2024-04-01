@@ -6,15 +6,11 @@ import { icons } from "../../../constants";
 import { checkImageURL } from "../../../utils";
 //jobTitle = companyName
 //companyName = type (retailer or recycle)
-const Company = ({ companyLogo, name, location, locationUrl, contact }) => {
+const Company = ({ companyLogo, name, location, locationUrl, contact, type }) => {
 
   const onLocationPress = () => {
     Linking.openURL(locationUrl).catch(err => console.error("An error occurred", err));
   };
-
-  const logoImage = { companyLogo }
-
-  console.log('Logo path: ', { companyLogo })
 
 
   return (
@@ -33,13 +29,12 @@ const Company = ({ companyLogo, name, location, locationUrl, contact }) => {
       {/* below is the companyName, ignore the style naming */}
       <View style={styles.jobTitleBox}>
         <Text style={styles.jobTitle}>{name}</Text>
-        <Text style={styles.jobTitle}>{companyLogo}</Text>
       </View>
 
       {/*this section show the companyType, state*/}
       <View style={styles.companyInfoBox}>
 
-        <Text style={styles.companyName}> Recycling Center/ </Text>
+        <Text style={styles.companyName}> {type} / </Text>
         <Text style={styles.companyName}> {contact} </Text>
       </View>
 

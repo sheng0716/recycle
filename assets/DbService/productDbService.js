@@ -55,8 +55,8 @@ const getAcceptedMaterialByCenterId = async (centerId) => {
 
 const getProductsByRetailerId = async (retailerId) => {
     try {
-        // const response = await axios.get(`${pre_url}/api/acceptedMaterials/centerId=${centerId}`);
-        return response.data.materials;
+        const response = await axios.get(`${pre_url}/api/retailer/retailerId=${retailerId}/products`);
+        return response.data.products;
     } catch (error) {
         console.error(error);
         throw error;
@@ -70,4 +70,5 @@ export default {
     getAllMaterials,
     getAllCenterByMaterialId,
     getAcceptedMaterialByCenterId,
+    getProductsByRetailerId,
 }

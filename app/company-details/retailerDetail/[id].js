@@ -19,6 +19,7 @@ import {
     ScreenHeaderBtn,
     MapView,
     MaterialTab,
+    RetailerProductCard,
 } from "../../../components";
 import { COLORS, icons, SIZES } from "../../../constants";
 // import companiesDbService from "../../assets/DbService/companiesDbService";
@@ -66,7 +67,7 @@ const retailerDetail = () => {
             const retailerData = await companiesDbService.getRetailerDataByRetailerId(c_id);
             setRetailerData(retailerData);
             console.log('Retailer Information: ', retailerData);
-            console.log('Name: ', retailerData.name)//this ouput undefined
+            console.log('Name: ', retailerData.name)
             setIsLoading(false);
         } catch (error) {
             setError(error);
@@ -75,29 +76,29 @@ const retailerDetail = () => {
             setIsLoading(false);
         }
     }
-    // const fetchAcceptedMaterialData = async () => {
-    //     setIsLoading(true);
-    //     try {
-    //         const acceptedMaterials = await productDbService.getAcceptedMaterialByCenterId(c_id);
-    //         setAcceptMaterial(acceptedMaterials);
-    //         console.log('Accepted Material: ', acceptMaterial);
-    //         setIsLoading(false);
-    //     } catch (error) {
-    //         setError(error);
-    //         console.log(error);
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // }
+    const fetchProductData = async () => {
+        setIsLoading(true);
+        try {
+            const productsData = await productDbService.getProductsByRetailerId(c_id);
+            setProductSell(productsData);
+            console.log('Products Sell: ', productsData);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     useEffect(() => {
         fetchRetailerData();
-        // fetchAcceptedMaterialData();
+        fetchProductData();
     }, [])
 
     const refetch = () => {
         setIsLoading(true);
         fetchRetailerData();
-        // fetchAcceptedMaterialData();
+        fetchProductData();
     };
 
     const companyName = retailerData.name;
@@ -120,19 +121,20 @@ const retailerDetail = () => {
                     />
                 );
 
-            case "Materials":
+            case "Products":
                 return (
                     <View>
-                        {/* <FlatList
+                        <FlatList
                             scrollEnabled={false}
+                            contentContainerStyle={{ rowGap: SIZES.medium }}
                             numColumns={2}
-                            data={acceptMaterial}
+                            data={productSell}
                             renderItem={({ item }) =>
-                                <MaterialCard
+                                <RetailerProductCard
                                     item={item}
                                 />
                             }
-                        /> */}
+                        />
                     </View>
                 );
 
@@ -143,7 +145,6 @@ const retailerDetail = () => {
                         <Text>{retailerData.name}</Text>
                         <Text>{retailerData.latitude}</Text>
                         <Text>{retailerData.longitude}</Text>
-                        <Text>{retailerData.contactNo}</Text>
 
                         <View>
 
@@ -156,8 +157,7 @@ const retailerDetail = () => {
                                         centerName: retailerData.name,
 
                                     }
-                                }
-                                )
+                                })
                             }}>
                                 <Text style={{ padding: 20, backgroundColor: 'skyblue', textAlign: 'center' }}>View Map</Text>
                             </TouchableOpacity>
@@ -213,7 +213,7 @@ const retailerDetail = () => {
                                 companyLogo={retailerData.logoPath}
                                 name={retailerData.name}
                                 contact={retailerData.contactNo}
-
+                                type='Retailer'
                                 location={retailerData.state}
                                 locationUrl={retailerData.locationUrl}
                             />

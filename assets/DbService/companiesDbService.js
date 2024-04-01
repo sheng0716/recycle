@@ -86,7 +86,7 @@ const getCenterDataByCenterId = async (centerId) => {
 }
 const getRetailerDataByRetailerId = async (retailerId) => {
     try {
-        const response = await axios.get(`${pre_url}/api/retailer/${retailerId}`);
+        const response = await axios.get(`${pre_url}/api/retailer/retailerId=${retailerId}`);
         return response.data;
     } catch (error) {
         console.error(error);
