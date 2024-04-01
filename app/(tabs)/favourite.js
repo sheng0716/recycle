@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import { COLORS, SIZES, FONT } from '../../constants';
 import React, { useState } from 'react';
+import { useAuth } from '../AuthProvider';
 
 const favouriteType = ['Retailer', 'Recycle'];
 const Favourite = () => {
+    const { userId } = useAuth();
 
     const [activeFavouriteType, setActiveFavouriteType] = useState(favouriteType[0]);
 
@@ -40,6 +42,7 @@ const Favourite = () => {
                 <View>
                     <View>
                         <Text>favourite</Text>
+                        <Text>{userId}</Text>
                     </View>
                     <View style={styles.tabsContainer}>
                         <FlatList

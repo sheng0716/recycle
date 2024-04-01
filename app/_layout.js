@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 // import * as SplashScreen from "expo-splash-screen";
 
 // SplashScreen.preventAutoHideAsync();
+import { AuthProvider } from "./AuthProvider";
 
 export const unstable_settings = {
     // Ensure any route can link back to `/`
@@ -23,14 +24,17 @@ const Layout = () => {
     }
 
     return (
-        <Stack
-        // initialRouteName="home"
-        >
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <AuthProvider>
+
+            <Stack
+            // initialRouteName="home"
+            >
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
 
 
-        </Stack>
+            </Stack>
+        </AuthProvider>
 
     )
 };

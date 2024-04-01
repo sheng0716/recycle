@@ -1,11 +1,16 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { Tabs, useLocalSearchParams } from 'expo-router';
 
-export default function TabLayout() {
+
+const TabNavigator = () => {
+    // const params = useLocalSearchParams();
+    // const userId = params.userId;
+    // console.log("User ID: ", userId)
     return (
-        <Tabs screenOptions={{ tabBarIconStyle: { marginTop: 3 }, tabBarActiveTintColor: 'blue', tabBarLabelStyle: { fontSize: 15 } }}>
+        <Tabs screenOptions={{ tabBarIconStyle: { marginTop: 3 }, tabBarActiveTintColor: 'blue', tabBarLabelStyle: { fontSize: 15 } }}
+            initialRouteName='home'>
             <Tabs.Screen
                 name="home"
                 options={{
@@ -52,3 +57,5 @@ export default function TabLayout() {
         </Tabs>
     );
 }
+
+export default TabNavigator;

@@ -1,6 +1,8 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, Alert, Image } from 'react-native';
 import { React, useState, useEffect } from 'react';
 import * as eva from '@eva-design/eva';
+import { useLocalSearchParams } from 'expo-router';
+
 import {
     Layout,
     Icon,
@@ -13,7 +15,9 @@ import { icons } from '../../constants';
 
 
 const ProfileScreen = () => {
-
+    const params = useLocalSearchParams();
+    const userId = params.userId;
+    console.log("User ID: ", userId)
     const [isEditable, setIsEditable] = useState(false);
     const [userData, setUserData] = useState({
         // get data from database

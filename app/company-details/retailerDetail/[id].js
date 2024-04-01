@@ -31,7 +31,6 @@ import MaterialCard from "../../../components/jobdetails/MaterialTab/MaterialCar
 const tabs = ["About", "Products", "Location"];
 
 const retailerDetail = () => {
-    const params = useLocalSearchParams();
 
     const navigation = useNavigation();
 
@@ -58,6 +57,7 @@ const retailerDetail = () => {
     //     }
     // };
 
+    const params = useLocalSearchParams();
     const c_id = params.id;// this is the company id, later will will use to find materials from center materials pivot table
     // const { data, isLoading, error, refetch } = useFetchByCompanyId('/api/centers', c_id)
 
