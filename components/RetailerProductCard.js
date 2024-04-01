@@ -34,32 +34,37 @@ const styles = StyleSheet.create({
     imageContainer: {
         flex: 1,
         width: 90,
-        marginLeft: SIZES.small / 2,
+        marginLeft: SIZES.small / 3,
         marginRight: SIZES.small / 2,
         borderRadius: SIZES.small,
         overflow: 'hidden',
     },
     coverImage: {
-        height: 256,
+        height: 100,
         width: '90%',
         borderRadius: 20,
         marginVertical: 10,
         marginLeft: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     name: {
         fontSize: 18,
         color: "#444444",
         fontWeight: "600",
+        marginLeft: 5,
     },
     price: {
         fontSize: 18,
         color: "#9c9c9c",
         fontWeight: "600",
+        marginLeft: 5,
     },
     quantity: {
         fontSize: 18,
         color: "#9c9c9c",
         fontWeight: "600",
+        marginLeft: 5,
     },
 
 })

@@ -393,6 +393,78 @@ def api_get_retailer_selling_products_by_retailerId(retailerId):
     finally:
         conn.close()
 
+
+######Favourite Stuff######################################################
+        
+#Get Favourite Product Data by userId
+@app.route('/api/favourite/products/userId=<int:userId>', methods=['GET'])
+def api_get_favourite_product_by_userId(userId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command=''
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+# Insert favourite product into favourite product table
+@app.route('/api/favourite/products/', methods=['POST'])
+def api_insert_favourite_product():
+    try:
+        data=request.get_json()
+        userId=data.get('userId')
+        productId=data.get('productId')
+
+        conn=sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        #Check if the record already exists
+        cursor.execute('SELECT * FROM favourite_products WHERE userId=? AND productId=?',(userId,productId))
+        existing_record=cursor.fetchone()
+
+        if existing_record:
+            return jsonify({'message': 'Record already exists'})
+        #Insert record
+        cursor.execute('INSERT INTO favourite_products (userId,productId) VALUES (?,?)',(userId,productId))
+        conn.commit()
+        return jsonify({'message': 'Record inserted successfully'})
+
+    except Exception as e:
+        print('Error:', str(e))
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+
+# Remove favourite product from favourite product table
+@app.route('/api/favourite/products/userId=<int:userId>/productId=<int:productId>', methods=['DELETE'])
+def api_remove_from_favourite_product(userId,productId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        # Delete the record
+        cursor.execute('DELETE FROM favourite_products WHERE userId = ? AND productId = ?', (userId, productId))
+        conn.commit()
+
+        if cursor.rowcount > 0:
+            return jsonify({'message': 'Record removed successfully'})
+        else:
+            return jsonify({'message': 'Record not found'})
+    except Exception as e:
+        print('Error:', str(e))
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+
+
+
 # #get all centers information
 # @app.route('/api/centers', methods=['GET'])
 # def api_get_all_centers_information():

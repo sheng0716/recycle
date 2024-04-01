@@ -126,7 +126,7 @@ const retailerDetail = () => {
                     <View>
                         <FlatList
                             scrollEnabled={false}
-                            contentContainerStyle={{ rowGap: SIZES.medium }}
+                            contentContainerStyle={{ columnGap: SIZES.medium }}
                             numColumns={2}
                             data={productSell}
                             renderItem={({ item }) =>
