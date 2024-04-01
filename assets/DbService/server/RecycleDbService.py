@@ -463,7 +463,127 @@ def api_remove_from_favourite_product(userId,productId):
         conn.close()
 
 
+####User Data##################################################
+        
+#Function get user data by userId
+@app.route('/api/users/userId=<int:userId>',methods=['GET'])
+def api_get_user_data_by_userId(userId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
 
+        # Fetch user data including book data using a JOIN query
+        cursor.execute('SELECT * FROM users WHERE userId = ?', (userId,))
+        user_data = cursor.fetchall()
+        return jsonify({'userData': user_data})
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route('/api/users/userId=<int:user_id>', methods=['PUT'])
+def api_update_user_data(user_id):
+    try:
+        data = request.get_json()
+        new_username = data.get('username')
+        new_email = data.get('email')
+
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        # Update the user data in the database
+        cursor.execute('''
+            UPDATE users
+            SET userName = ?, email = ?,
+            WHERE userId = ?
+        ''', (new_username, new_email, user_id))
+
+        conn.commit()
+
+        if cursor.rowcount > 0:
+            return jsonify({'message': 'User data updated successfully'})
+        else:
+            return jsonify({'message': 'User not found'})
+
+    except Exception as e:
+        print('Error:', str(e))
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+
+####Login and Register########################################################
+@app.route('/api/login', methods=['POST'])
+def api_login():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        # Retrieve the user's data by email
+        cursor.execute('SELECT * FROM users WHERE email = ?', (email,))
+        user_data = cursor.fetchone()  # (1, 'john', 'john', 'john@example.com123',)
+
+        if user_data:
+            # Check if the password matches
+            if user_data[2] == password:
+                # Successful login
+                return jsonify({'message': 'Login successful', 'userId': user_data[0]})
+            else:
+                return jsonify({'message': 'Invalid password'})
+        else:
+            return jsonify({'message': 'User not found'})
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+# add new user
+@app.route('/api/register', methods=['POST'])
+def api_register_user():
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        email = data.get('email')
+        password = data.get('password')
+
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        # Check if the email is already in use
+        cursor.execute('SELECT COUNT(*) FROM users WHERE email = ?', (email,))
+        count = cursor.fetchone()[0]
+
+        if count > 0:
+            # The email is already registered
+            return jsonify({'isUnique': False, 'message': 'Email is already registered'}), 400
+
+        # Insert the new user record into the database
+        cursor.execute('INSERT INTO users (userName, email, password, ) VALUES (?, ?, ?, )',
+                       (username, email, password,))
+
+        # Retrieve the user_id
+        cursor.execute('SELECT userId FROM users WHERE email = ?', (email,))
+        user_id = cursor.fetchone()
+
+        conn.commit()
+
+        return jsonify({'isUnique': True, 'message': 'Register successful', 'userId': user_id})
+
+    except Exception as e:
+        print('Error:', str(e))
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+        
 
 # #get all centers information
 # @app.route('/api/centers', methods=['GET'])
