@@ -94,6 +94,16 @@ const getRetailerDataByRetailerId = async (retailerId) => {
     }
 }
 
+const getFavouriteRetailerByUserId = async (userId) => {
+    try {
+        const response = await axios.get(`${pre_url}/api/favourite/retailer/userId=${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 export default {
     getAllCompanies,
     getAllRetailer,
@@ -102,4 +112,5 @@ export default {
     getCenterDataByMaterialId,
     getCenterDataByCenterId,
     getRetailerDataByRetailerId,
+    getFavouriteRetailerByUserId,
 };

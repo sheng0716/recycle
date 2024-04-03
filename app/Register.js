@@ -4,6 +4,7 @@ import { Icon } from '@ui-kitten/components';
 import UsersDbService from '../assets/DbService/userDbService';
 import { useRouter } from 'expo-router';
 import { useAuth } from './AuthProvider';
+import { icons } from '../constants';
 
 const RegisterScreen = ({ navigation }) => {
     const router = useRouter();
@@ -79,9 +80,9 @@ const RegisterScreen = ({ navigation }) => {
                 />
             </TouchableOpacity> */}
 
-            {/* <Image source={require('../../../assets/img/logo.jpg')}
+            <Image source={icons.appLogo}
                 style={styles.image}
-            /> */}
+            />
             <Text style={styles.headers}>Register New Account</Text>
 
             <View style={[styles.container, { marginTop: 50 }]}>

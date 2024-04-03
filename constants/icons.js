@@ -10,6 +10,7 @@ import chevronLeft from '../assets/icons/chevron-left.png'
 import chevronRight from '../assets/icons/chevron-right.png'
 import chevronDoubleLeft from '../assets/icons/chevron-double-left.png'
 import profile from '../assets/icons/profile.png'
+import appLogo from '../assets/icons/appLogo.jpg'
 
 
 export default {
@@ -25,4 +26,5 @@ export default {
   chevronRight,
   chevronDoubleLeft,
   profile,
+  appLogo,
 };

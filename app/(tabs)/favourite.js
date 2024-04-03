@@ -5,11 +5,13 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
-    FlatList
+    FlatList,
+    RefreshControl
 } from 'react-native';
 import { COLORS, SIZES, FONT } from '../../constants';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../AuthProvider';
+import companiesDbService from '../../assets/DbService/companiesDbService';
 
 const favouriteType = ['Retailer', 'Recycle'];
 const Favourite = () => {
@@ -17,12 +19,65 @@ const Favourite = () => {
 
     const [activeFavouriteType, setActiveFavouriteType] = useState(favouriteType[0]);
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const [favouriteRetailer, setFavouriteRetailer] = useState([]);
+    const [favouriteCenter, setFavouriteCenter] = useState([]);
+
+    const fetchFavouriteRetailerData = async () => {
+        setIsLoading(true);
+        try {
+            const favouriteRetailerData = await companiesDbService.getFavouriteRetailerByUserId(1);
+            setFavouriteRetailer(favouriteRetailerData.favourite_retailer);
+            console.log('Favourite Retailer: ', favouriteRetailer);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchFavouriteRetailerData();
+    }, [])
+
+    // const refetch = () => {
+    //     setIsLoading(true);
+    // }
+
+    // const onRefresh = useCallback(() => {
+    //     setRefreshing(true);
+    //     refetch()
+    //     setRefreshing(false)
+    // }, []);
+
+
+
     const displayTabContent = () => {
         switch (activeFavouriteType) {
             case 'Retailer':
                 return (
                     <View>
                         <Text>This will show retailer favourite</Text>
+                        <View>
+                            <FlatList
+                                scrollEnabled={false}
+                                data={favouriteRetailer}
+                                renderItem={({ item }) => (
+                                    <View>
+                                        <Text>RetailerId: {item.retailerId}</Text>
+                                    </View>
+                                    //since get the favourite retailer id, pass the retailer id to the favourite card, inside the favourite card use fetch
+                                    //the retailer information on the card by the retailer id
+
+                                )
+                                }
+                            />
+                        </View>
                     </View>
                 );
             case 'Recycle':
@@ -38,11 +93,16 @@ const Favourite = () => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite, marginRight: SIZES.small, marginLeft: SIZES.small }}>
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false}
+            // refreshControl=
+            // {
+            //     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            // }
+            >
                 <View>
                     <View>
                         <Text>favourite</Text>
-                        <Text>{userId}</Text>
+                        <Text>UserId: {userId}</Text>
                     </View>
                     <View style={styles.tabsContainer}>
                         <FlatList

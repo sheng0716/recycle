@@ -395,15 +395,52 @@ def api_get_retailer_selling_products_by_retailerId(retailerId):
 
 
 ######Favourite Stuff######################################################
+
+def favourite_retailer(row):
+    return {
+        'userId': row[0],
+        'retailerId': row[1],
+    }
+def favourite_center(row):
+    return {
+        'userId': row[0],
+        'retailerId': row[1],
+    }
         
-#Get Favourite Product Data by userId
-@app.route('/api/favourite/products/userId=<int:userId>', methods=['GET'])
+#Get Favourite Retailer Data by userId
+@app.route('/api/favourite/retailer/userId=<int:userId>', methods=['GET'])
 def api_get_favourite_product_by_userId(userId):
     try:
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
-        sql_command=''
+        sql_command='SELECT * FROM favourite_retailers WHERE userId=?;'
+        cursor.execute(sql_command,(userId,))
+        rows=cursor.fetchall()
+
+        favourite_retailers=[favourite_retailer(row)for row in rows]
+
+        return jsonify({'favourite_retailer': favourite_retailers})
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+        
+#Get Favourite Center Data by userId
+@app.route('/api/favourite/center/userId=<int:userId>', methods=['GET'])
+def api_get_favourite_center_by_userId(userId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command='SELECT * FROM favourite_centers WHERE userId=?;'
+        cursor.execute(sql_command,(userId,))
+        rows=cursor.fetchall()
+
+        favourite_centers=[favourite_center(row)for row in rows]
+
+        return jsonify({'favourite_retailer': favourite_centers})
     except Exception as e:
         print('Error:', str(e))
         return jsonify({'error': str(e)}), 500

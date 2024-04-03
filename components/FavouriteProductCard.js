@@ -4,7 +4,7 @@ import {
     Text, Image, StyleSheet,
     TouchableOpacity,
 } from 'react-native';
-
+//this component is used to show the card in favourite page
 const FavouriteProductCard = ({ }) => {
 
     return (

@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 import { checkImageURL } from "../utils";
 import { COLORS, SIZES } from "../constants";
-
+//this component used in retail detail page
 const RetailerProductCard = ({ item }) => {
     return (
         <View style={styles.container}>

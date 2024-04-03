@@ -12,6 +12,7 @@ import {
 import UsersDbService from '../assets/DbService/userDbService';
 import { useRouter } from "expo-router";
 import { useAuth } from "./AuthProvider";
+import { icons } from "../constants";
 
 const LoginScreen = ({ navigation }) => {
     const router = useRouter();
@@ -62,7 +63,7 @@ const LoginScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
 
-            {/* <Image style={styles.image} source={require("../../../assets/img/login_book_logo.jpg")} /> */}
+            <Image style={styles.image} source={icons.appLogo} />
             <StatusBar style="auto" />
             <View style={styles.inputView}>
                 <TextInput
