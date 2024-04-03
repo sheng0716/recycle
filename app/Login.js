@@ -53,7 +53,10 @@ const LoginScreen = ({ navigation }) => {
     }
 
     const registerHandler = () => {
-        navigation.navigate('Register')
+        // navigation.navigate('Register')
+        router.push({
+            pathname: '/Register',
+        })
     }
 
     return (
