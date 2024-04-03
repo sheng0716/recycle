@@ -8,6 +8,7 @@ function transformUserData(response) {
         userId: response[0],
         username: response[2],
         email: response[3],
+        phoneNumber: response[4],
     };
 }
 

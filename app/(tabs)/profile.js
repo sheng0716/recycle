@@ -21,7 +21,7 @@ const ProfileScreen = () => {
     // const userId = params.userId;
     // console.log("User ID: ", userId)
 
-    const { userId } = useAuth();
+    const { userId } = useAuth();//get userId after login
 
     const [isEditable, setIsEditable] = useState(false);
     const [userData, setUserData] = useState({
@@ -30,22 +30,9 @@ const ProfileScreen = () => {
         username: "USER NAME",
         email: "abcd@hotmail.com",
         phoneNumber: "012-3456789",
-        isMember: false,
     });
 
-    const handleEditProcess = () => {
-        //function for click on edit icon
-        setIsEditable(!isEditable);
-    }
 
-    // const handleSaveProcess = async () => {
-    //     //function for click on save icon
-    //     setIsEditable(false);
-
-    //     await UsersDbService.updateUser(userId, userData);
-
-    //     Alert.alert("Profile Saving", "Saved Successfully");
-    // }
 
     const fetchUserData = async () => {
         try {
@@ -62,20 +49,25 @@ const ProfileScreen = () => {
         fetchUserData();
     }, []); // Ensures it runs once isMember in route.params changed
 
+    const handleEditProcess = () => {
+        //function for click on edit icon
+        setIsEditable(!isEditable);
+    }
+
     const handleChange = (key, value) => {
-        // setUserData((prevData) => ({
-        //     ...prevData,
-        //     [key]: value,
-        // }));
+        setUserData((prevData) => ({
+            ...prevData,
+            [key]: value,
+        }));
     };
 
     const handleSaveProcess = async () => {
         //function for click on save icon
-        // setIsEditable(false);
+        setIsEditable(false);
 
-        // await UsersDbService.updateUser(userId, userData);
+        await UsersDbService.updateUser(userId, userData);
 
-        // Alert.alert("Profile Saving", "Saved Successfully");
+        Alert.alert("Profile Saving", "Saved Successfully");
     }
 
     return (
@@ -86,8 +78,11 @@ const ProfileScreen = () => {
                 <ScrollView>
 
                     <View>
-                        <Text>This is profile</Text>
-                        <Text>{userId}</Text>
+                        <Text>profile</Text>
+                        <Text>Userid: {userId}</Text>
+                        <Text>Username: {userData.username}</Text>
+                        <Text>email: {userData.email}</Text>
+                        <Text>phoneNumber: {userData.phoneNumber}</Text>
                     </View>
                     <Layout style={styles.container}>
                         <View style={styles.topBar}>
@@ -111,7 +106,7 @@ const ProfileScreen = () => {
                             <View style={{ alignItems: 'center', flexDirection: "row" }}>
                                 <Text style={styles.userName}>{userData.username}</Text>
                                 {/* below onPress is put navMember inside */}
-                                {userData.isMember ? (
+                                {/*{userData.isMember ? (
                                     <TouchableOpacity onPress={() => { }}>
                                         <Icon
                                             style={{ width: 40, height: 45, marginLeft: 10, marginBottom: -10 }}
@@ -126,8 +121,10 @@ const ProfileScreen = () => {
                                             name="cube-outline"
                                         />
                                         {/* <Text>Cube-outline</Text> */}
-                                    </TouchableOpacity>
-                                )}
+                                {/* </TouchableOpacity> */}
+                                {/* )} */}
+
+                                {/* aa */}
                             </View>
 
                             <Text style={styles.email}>{userData.email}</Text>
@@ -139,14 +136,14 @@ const ProfileScreen = () => {
                                 <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
                                     name='edit-outline'
                                 />
-                                {/* <Text>edit-outline</Text> */}
+
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={handleSaveProcess}>
                                 <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
                                     name='save-outline'
                                 />
-                                {/* <Text>save-outline</Text> */}
+
                             </TouchableOpacity>
                         </View>
 
@@ -170,9 +167,9 @@ const ProfileScreen = () => {
                                 editable={isEditable}
                             />
                             <View style={styles.hrLine} />
-                            {/* phone number */}
 
-                            {/* <Text style={styles.subTitle}>Phone Number:</Text>
+
+                            <Text style={styles.subTitle}>Phone Number:</Text>
                             <TextInput
                                 style={styles.inputText}
                                 keyboardType='phone-pad'
@@ -180,7 +177,7 @@ const ProfileScreen = () => {
                                 onChangeText={(text) => handleChange('phoneNumber', text)}
                                 editable={isEditable}
                             />
-                            <View style={styles.hrLine} /> */}
+                            <View style={styles.hrLine} />
 
                         </View>
 

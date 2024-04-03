@@ -488,6 +488,7 @@ def api_update_user_data(user_id):
         data = request.get_json()
         new_username = data.get('username')
         new_email = data.get('email')
+        new_phoneNumber = data.get('phoneNumber')
 
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
@@ -495,9 +496,9 @@ def api_update_user_data(user_id):
         # Update the user data in the database
         cursor.execute('''
             UPDATE users
-            SET userName = ?, email = ?,
+            SET userName = ?, email = ?,phone_no=?
             WHERE userId = ?
-        ''', (new_username, new_email, user_id))
+        ''', (new_username, new_email, new_phoneNumber,user_id))
 
         conn.commit()
 
@@ -553,6 +554,7 @@ def api_register_user():
         username = data.get('username')
         email = data.get('email')
         password = data.get('password')
+        phone_no=data.get('phoneNumber')
 
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
@@ -566,8 +568,8 @@ def api_register_user():
             return jsonify({'isUnique': False, 'message': 'Email is already registered'}), 400
 
         # Insert the new user record into the database
-        cursor.execute('INSERT INTO users (userName, email, password, ) VALUES (?, ?, ?, )',
-                       (username, email, password,))
+        cursor.execute('INSERT INTO users (userName, email, password,phone_no ) VALUES (?, ?, ?,? )',
+                       (username, email, password,phone_no))
 
         # Retrieve the user_id
         cursor.execute('SELECT userId FROM users WHERE email = ?', (email,))
