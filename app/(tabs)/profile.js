@@ -12,12 +12,17 @@ import {
 } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { icons } from '../../constants';
+import { useAuth } from '../AuthProvider';
+import UsersDbService from '../../assets/DbService/userDbService';
 
 
 const ProfileScreen = () => {
-    const params = useLocalSearchParams();
-    const userId = params.userId;
-    console.log("User ID: ", userId)
+    // const params = useLocalSearchParams();
+    // const userId = params.userId;
+    // console.log("User ID: ", userId)
+
+    const { userId } = useAuth();
+
     const [isEditable, setIsEditable] = useState(false);
     const [userData, setUserData] = useState({
         // get data from database
@@ -53,9 +58,9 @@ const ProfileScreen = () => {
     };
 
     // Use useEffect to fetch user data when the component mounts
-    // useEffect(() => {
-    //     fetchUserData();
-    // }, [route.params]); // Ensures it runs once isMember in route.params changed
+    useEffect(() => {
+        fetchUserData();
+    }, []); // Ensures it runs once isMember in route.params changed
 
     const handleChange = (key, value) => {
         // setUserData((prevData) => ({
@@ -82,6 +87,7 @@ const ProfileScreen = () => {
 
                     <View>
                         <Text>This is profile</Text>
+                        <Text>{userId}</Text>
                     </View>
                     <Layout style={styles.container}>
                         <View style={styles.topBar}>
@@ -164,8 +170,9 @@ const ProfileScreen = () => {
                                 editable={isEditable}
                             />
                             <View style={styles.hrLine} />
+                            {/* phone number */}
 
-                            <Text style={styles.subTitle}>Phone Number:</Text>
+                            {/* <Text style={styles.subTitle}>Phone Number:</Text>
                             <TextInput
                                 style={styles.inputText}
                                 keyboardType='phone-pad'
@@ -173,7 +180,7 @@ const ProfileScreen = () => {
                                 onChangeText={(text) => handleChange('phoneNumber', text)}
                                 editable={isEditable}
                             />
-                            <View style={styles.hrLine} />
+                            <View style={styles.hrLine} /> */}
 
                         </View>
 
