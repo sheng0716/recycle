@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, Alert, Image } from 'react-native';
 import { React, useState, useEffect } from 'react';
 import * as eva from '@eva-design/eva';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import {
     Layout,
@@ -22,6 +22,7 @@ const ProfileScreen = () => {
     // console.log("User ID: ", userId)
 
     const { userId } = useAuth();//get userId after login
+    const router = useRouter();
 
     const [isEditable, setIsEditable] = useState(false);
     const [userData, setUserData] = useState({
@@ -70,6 +71,12 @@ const ProfileScreen = () => {
         Alert.alert("Profile Saving", "Saved Successfully");
     }
 
+    const handleSettingPress = () => {
+
+        router.push({
+            pathname: '/setting'
+        })
+    }
     return (
         <>
             <IconRegistry icons={EvaIconsPack} />
@@ -78,21 +85,17 @@ const ProfileScreen = () => {
                 <ScrollView>
 
                     <View>
-                        <Text>profile</Text>
                         <Text>Userid: {userId}</Text>
-                        <Text>Username: {userData.username}</Text>
-                        <Text>email: {userData.email}</Text>
-                        <Text>phoneNumber: {userData.phoneNumber}</Text>
                     </View>
                     <Layout style={styles.container}>
                         <View style={styles.topBar}>
                             <Text style={styles.title}>Welcome, {userData.username}</Text>
 
-                            <TouchableOpacity onPress={() => { }}>
+                            <TouchableOpacity onPress={handleSettingPress}>
                                 <Icon style={{ width: 35, height: 45, padding: 5, margin: 5 }}
                                     name='settings-2-outline'
                                 />
-                                <Text>Settings</Text>
+
                             </TouchableOpacity>
                         </View>
 
