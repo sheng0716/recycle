@@ -9,7 +9,7 @@ const StartPage = () => {
 
             {/* favourite, to do function on here */}
             {/* presentation change to Login */}
-            <Redirect href="/Login" />
+            <Redirect href="/home" />
         </AuthProvider>
     )
 

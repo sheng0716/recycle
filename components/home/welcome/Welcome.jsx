@@ -28,9 +28,10 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
       <View style={styles.container}>
         <Text style={styles.userName}>Hello </Text>
         <Text style={styles.welcomeMessage}>What are looking for?</Text>
+        <Text style={styles.welcomeMessage}>Today Special</Text>
       </View>
 
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
           <TextInput
             style={styles.searchInput}
@@ -38,19 +39,19 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
             onChangeText={(text) => setSearchTerm(text)}
             placeholder='What are you looking for?'
           />
-        </View>
+        </View> */}
 
-        <TouchableOpacity style={styles.searchBtn} onPress={handleClick}>
+      {/* <TouchableOpacity style={styles.searchBtn} onPress={handleClick}>
           <Image
             source={icons.search}
             resizeMode='contain'
             style={styles.searchBtnImage}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
 
-        {/* location button */}
-        <TouchableOpacity
+      {/* location button */}
+      {/* <TouchableOpacity
           style={styles.locationBtn}
           onPress={() => {
             router.push(`/map`);
@@ -61,12 +62,12 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
             resizeMode='contain'
             style={styles.locationBtnImage}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-      </View>
+      {/* </View> */}
 
       {/* if user click on this, it will automatically go to search, whether search 'retailer' or 'recycle' */}
-      <View style={styles.tabsContainer}>
+      {/* <View style={styles.tabsContainer}>
         <FlatList
           data={companyType}
           renderItem={({ item }) => (
@@ -85,7 +86,7 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
           contentContainerStyle={{ columnGap: SIZES.small }}
           horizontal
         />
-      </View>
+      </View> */}
     </View>
   )
 }

@@ -39,4 +39,5 @@ export {
   RetailerProductCard,
   FavouriteRetailerCard,
   FooterRetailer,
+
 };
