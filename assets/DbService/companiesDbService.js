@@ -104,6 +104,27 @@ const getFavouriteRetailerByUserId = async (userId) => {
     }
 }
 
+const addFavouriteRetailer = async (userId, retailerId) => {
+    try {
+        const response = await axios.post(`${pre_url}/api/favourite/retailer/add`, { userId, retailerId });
+        return response.data;
+    } catch (error) {
+        console.error(error)
+        throw error;
+
+    }
+};
+const removeFavouriteRetailer = async (userId, retailerId) => {
+    try {
+        const response = await axios.post(`${pre_url}/api/favourite/retailer/remove`, { userId, retailerId });
+        return response.data;
+    } catch (error) {
+        console.error(error)
+        throw error;
+
+    }
+};
+
 export default {
     getAllCompanies,
     getAllRetailer,
@@ -113,4 +134,6 @@ export default {
     getCenterDataByCenterId,
     getRetailerDataByRetailerId,
     getFavouriteRetailerByUserId,
+    addFavouriteRetailer,
+    removeFavouriteRetailer,
 };

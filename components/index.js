@@ -11,6 +11,7 @@ import Company from "./jobdetails/company/Company";
 import { default as Tabs } from "./jobdetails/tabs/Tabs";
 import { default as About } from "./jobdetails/about/About";
 import { default as Footer } from "./jobdetails/footer/Footer";
+import FooterRetailer from "./jobdetails/footer/FooterRetailer";
 
 // common
 import NearbyJobCard from "./common/cards/CardInfo";
@@ -18,6 +19,8 @@ import NearbyJobCard from "./common/cards/CardInfo";
 import BestSelling from "./BestSelling";
 import BestSellingCard from "./BestSellingCard";
 import RetailerProductCard from "./RetailerProductCard";
+
+import FavouriteRetailerCard from "./FavouriteRetailerCard";
 
 
 export {
@@ -34,4 +37,6 @@ export {
   BestSelling,
   BestSellingCard,
   RetailerProductCard,
+  FavouriteRetailerCard,
+  FooterRetailer,
 };

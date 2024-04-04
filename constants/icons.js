@@ -4,6 +4,7 @@ import search from "../assets/icons/search.png";
 import filter from "../assets/icons/filter.png";
 import left from "../assets/icons/left.png";
 import heartOutline from "../assets/icons/heart-ol.png";
+import heartFilled from "../assets/icons/heart.png";
 import share from "../assets/icons/share.png";
 import location from "../assets/icons/location.png";
 import chevronLeft from '../assets/icons/chevron-left.png'
@@ -27,4 +28,5 @@ export default {
   chevronDoubleLeft,
   profile,
   appLogo,
+  heartFilled,
 };

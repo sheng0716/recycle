@@ -400,6 +400,10 @@ def favourite_retailer(row):
     return {
         'userId': row[0],
         'retailerId': row[1],
+        'retailerName':row[3],
+        'address':row[4],
+        'state':row[5],
+        'logoPath':row[12],
     }
 def favourite_center(row):
     return {
@@ -414,7 +418,7 @@ def api_get_favourite_product_by_userId(userId):
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
-        sql_command='SELECT * FROM favourite_retailers WHERE userId=?;'
+        sql_command='SELECT * FROM favourite_retailers JOIN retailers ON favourite_retailers.retailerId=retailers.retailerId WHERE favourite_retailers.userId=?;'
         cursor.execute(sql_command,(userId,))
         rows=cursor.fetchall()
 
@@ -426,7 +430,7 @@ def api_get_favourite_product_by_userId(userId):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-        
+
 #Get Favourite Center Data by userId
 @app.route('/api/favourite/center/userId=<int:userId>', methods=['GET'])
 def api_get_favourite_center_by_userId(userId):
@@ -447,25 +451,25 @@ def api_get_favourite_center_by_userId(userId):
     finally:
         conn.close()
 
-# Insert favourite product into favourite product table
-@app.route('/api/favourite/products/', methods=['POST'])
+# Insert favourite retailer into favourite retailer table
+@app.route('/api/favourite/retailer/add', methods=['POST'])
 def api_insert_favourite_product():
     try:
         data=request.get_json()
         userId=data.get('userId')
-        productId=data.get('productId')
+        retailerId=data.get('retailerId')
 
         conn=sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
         #Check if the record already exists
-        cursor.execute('SELECT * FROM favourite_products WHERE userId=? AND productId=?',(userId,productId))
+        cursor.execute('SELECT * FROM favourite_retailers WHERE userId=? AND retailerId=?',(userId,retailerId))
         existing_record=cursor.fetchone()
 
         if existing_record:
             return jsonify({'message': 'Record already exists'})
         #Insert record
-        cursor.execute('INSERT INTO favourite_products (userId,productId) VALUES (?,?)',(userId,productId))
+        cursor.execute('INSERT INTO favourite_retailers (userId,retailerId) VALUES (?,?)',(userId,retailerId))
         conn.commit()
         return jsonify({'message': 'Record inserted successfully'})
 
@@ -478,14 +482,14 @@ def api_insert_favourite_product():
 
 
 # Remove favourite product from favourite product table
-@app.route('/api/favourite/products/userId=<int:userId>/productId=<int:productId>', methods=['DELETE'])
-def api_remove_from_favourite_product(userId,productId):
+@app.route('/api/favourite/retailer/remove', methods=['DELETE'])
+def api_remove_from_favourite_product(userId,retailerId):
     try:
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
         # Delete the record
-        cursor.execute('DELETE FROM favourite_products WHERE userId = ? AND productId = ?', (userId, productId))
+        cursor.execute('DELETE FROM favourite_retailers WHERE userId = ? AND retailerId = ?', (userId, retailerId))
         conn.commit()
 
         if cursor.rowcount > 0:

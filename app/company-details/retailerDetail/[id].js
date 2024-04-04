@@ -20,6 +20,7 @@ import {
     MapView,
     MaterialTab,
     RetailerProductCard,
+    FooterRetailer,
 } from "../../../components";
 import { COLORS, icons, SIZES } from "../../../constants";
 // import companiesDbService from "../../assets/DbService/companiesDbService";
@@ -27,12 +28,13 @@ import useFetchByCompanyId from "../../../hook/useFetchByCompanyId";
 import companiesDbService from "../../../assets/DbService/companiesDbService";
 import productDbService from "../../../assets/DbService/productDbService";
 import MaterialCard from "../../../components/jobdetails/MaterialTab/MaterialCard";
+import { useAuth } from "../../AuthProvider";
 
 const tabs = ["About", "Products", "Location"];
 
 const retailerDetail = () => {
+    const { userId } = useAuth();
 
-    const navigation = useNavigation();
 
     const router = useRouter();
     const [retailerData, setRetailerData] = useState([]);
@@ -47,6 +49,7 @@ const retailerDetail = () => {
 
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [refreshing, setRefreshing] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
 
     // const fetchData = async () => {
     //     try {
@@ -61,6 +64,19 @@ const retailerDetail = () => {
     const c_id = params.id;// this is the company id, later will will use to find materials from center materials pivot table
     // const { data, isLoading, error, refetch } = useFetchByCompanyId('/api/centers', c_id)
 
+    const onToggleFavourite = async () => {
+        try {
+            if (isFavorite) {
+                await companiesDbService.removeFavouriteRetailer(userId, c_id);
+            } else {
+                await companiesDbService.addFavouriteRetailer(userId, c_id);
+            }
+            // Toggle the isFavorite state
+            setIsFavorite(!isFavorite);
+        } catch (error) {
+            console.error('Error toggling favorite status', error);
+        }
+    }
     const fetchRetailerData = async () => {
         setIsLoading(true);
         try {
@@ -229,7 +245,12 @@ const retailerDetail = () => {
                     )}
                 </ScrollView>
 
-                <Footer url={retailerData?.websiteUrl ?? 'https://google.com/'} />
+                <FooterRetailer
+                    url={retailerData?.websiteUrl ?? 'https://google.com/'}
+                    isFavourite={isFavorite}
+                    onToggleFavourite={onToggleFavourite}
+
+                />
             </>
         </SafeAreaView>
     );

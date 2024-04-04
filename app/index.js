@@ -7,8 +7,9 @@ const StartPage = () => {
     return (
         <AuthProvider>
 
-
-            <Redirect href="/favourite" />
+            {/* favourite, to do function on here */}
+            {/* presentation change to Login */}
+            <Redirect href="/Login" />
         </AuthProvider>
     )
 

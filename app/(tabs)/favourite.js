@@ -6,12 +6,14 @@ import {
     ScrollView,
     StyleSheet,
     FlatList,
-    RefreshControl
+    RefreshControl,
+    ActivityIndicator
 } from 'react-native';
 import { COLORS, SIZES, FONT } from '../../constants';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../AuthProvider';
 import companiesDbService from '../../assets/DbService/companiesDbService';
+import { FavouriteRetailerCard } from '../../components';
 
 const favouriteType = ['Retailer', 'Recycle'];
 const Favourite = () => {
@@ -24,12 +26,20 @@ const Favourite = () => {
     const [refreshing, setRefreshing] = useState(false);
 
     const [favouriteRetailer, setFavouriteRetailer] = useState([]);
+    //item can retrieve
+    // 'userId': row[0],
+    // 'retailerId': row[1],
+    // 'retailerName':row[3],
+    // 'address':row[4],
+    // 'state':row[5],
+    // 'logoPath':row[12],
     const [favouriteCenter, setFavouriteCenter] = useState([]);
 
     const fetchFavouriteRetailerData = async () => {
         setIsLoading(true);
         try {
-            const favouriteRetailerData = await companiesDbService.getFavouriteRetailerByUserId(1);
+            //inside parameter should change to userId
+            const favouriteRetailerData = await companiesDbService.getFavouriteRetailerByUserId(userId);
             setFavouriteRetailer(favouriteRetailerData.favourite_retailer);
             console.log('Favourite Retailer: ', favouriteRetailer);
             setIsLoading(false);
@@ -45,15 +55,16 @@ const Favourite = () => {
         fetchFavouriteRetailerData();
     }, [])
 
-    // const refetch = () => {
-    //     setIsLoading(true);
-    // }
+    const refetch = () => {
+        setIsLoading(true);
+        fetchFavouriteRetailerData();
+    }
 
-    // const onRefresh = useCallback(() => {
-    //     setRefreshing(true);
-    //     refetch()
-    //     setRefreshing(false)
-    // }, []);
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        refetch()
+        setRefreshing(false)
+    }, []);
 
 
 
@@ -68,12 +79,13 @@ const Favourite = () => {
                                 scrollEnabled={false}
                                 data={favouriteRetailer}
                                 renderItem={({ item }) => (
-                                    <View>
-                                        <Text>RetailerId: {item.retailerId}</Text>
-                                    </View>
-                                    //since get the favourite retailer id, pass the retailer id to the favourite card, inside the favourite card use fetch
-                                    //the retailer information on the card by the retailer id
-
+                                    <FavouriteRetailerCard
+                                        logoPath={item.logoPath}
+                                        name={item.retailerName}
+                                        address={item.address}
+                                        state={item.state}
+                                        retailerId={item.retailerId}
+                                    />
                                 )
                                 }
                             />
@@ -85,6 +97,8 @@ const Favourite = () => {
                     <View>
                         <Text>This will show recycle favourite</Text>
                     </View>
+                    // here should use another card because it will push to another detail page
+                    //with different handle card press
                 );
             default:
                 return null;
@@ -92,42 +106,53 @@ const Favourite = () => {
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite, marginRight: SIZES.small, marginLeft: SIZES.small }}>
+            <View>
+                <Text>favourite</Text>
+                <Text>UserId: {userId}</Text>
+                <View style={styles.tabsContainer}>
+                    <FlatList
+                        data={favouriteType}
+                        renderItem={({ item }) => (
+
+                            <TouchableOpacity
+                                style={styles.tab(activeFavouriteType, item)}
+                                onPress={() => {
+                                    setActiveFavouriteType(item);
+                                    // router.push(`/search/${item}`);
+                                }}
+                            >
+                                <Text style={styles.tabText(activeFavouriteType, item)}>{item}</Text>
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={(item) => item}
+                        contentContainerStyle={{ columnGap: SIZES.small }}
+                        horizontal
+                    />
+                </View>
+            </View>
 
             <ScrollView showsVerticalScrollIndicator={false}
-            // refreshControl=
-            // {
-            //     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            // }
+                refreshControl=
+                {
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
             >
-                <View>
-                    <View>
-                        <Text>favourite</Text>
-                        <Text>UserId: {userId}</Text>
-                    </View>
-                    <View style={styles.tabsContainer}>
-                        <FlatList
-                            data={favouriteType}
-                            renderItem={({ item }) => (
+                {
+                    isLoading ? (
+                        <ActivityIndicator size='large' color={COLORS.primary} />
+                    ) : error ? (
+                        <Text>Something Went Wrong</Text>
+                    ) : favouriteRetailer.length === 0 ? (
+                        <Text>No data available</Text>
+                    ) : (
 
-                                <TouchableOpacity
-                                    style={styles.tab(activeFavouriteType, item)}
-                                    onPress={() => {
-                                        setActiveFavouriteType(item);
-                                        // router.push(`/search/${item}`);
-                                    }}
-                                >
-                                    <Text style={styles.tabText(activeFavouriteType, item)}>{item}</Text>
-                                </TouchableOpacity>
-                            )}
-                            keyExtractor={(item) => item}
-                            contentContainerStyle={{ columnGap: SIZES.small }}
-                            horizontal
-                        />
-                    </View>
-                    <View>
-                        {displayTabContent()}
-                    </View>
-                </View>
+                        <View>
+                            <View>
+                                {displayTabContent()}
+                            </View>
+                        </View>
+                    )
+                }
 
             </ScrollView>
         </SafeAreaView>
