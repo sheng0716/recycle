@@ -6,7 +6,7 @@ let pre_url = config.settings.serverPath;
 function transformUserData(response) {
     return {
         userId: response[0],
-        username: response[2],
+        username: response[1],
         email: response[3],
         phoneNumber: response[4],
     };
