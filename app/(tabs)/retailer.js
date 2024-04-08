@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
 import React from 'react';
-import { Product, BestSelling } from '../../components';
+import { Product, BestSelling, AllRetailer } from '../../components';
 import { COLORS, SIZES } from '../../constants';
 
 
@@ -12,9 +12,10 @@ const retailer = () => {
                 <View>
 
                     <View>
-                        <Text>This is retailer</Text>
+                        {/* <Text>This is retailer</Text> */}
                         <BestSelling />
-                        {/* Shop */}
+                        <AllRetailer />
+
 
                     </View>
                 </View>

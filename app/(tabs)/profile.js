@@ -83,10 +83,10 @@ const ProfileScreen = () => {
 
             <ApplicationProvider {...eva} theme={eva.light}>
                 <ScrollView>
-
+                    {/* 
                     <View>
                         <Text>Userid: {userId}</Text>
-                    </View>
+                    </View> */}
                     <Layout style={styles.container}>
                         <View style={styles.topBar}>
                             <Text style={styles.title}>Welcome, {userData.username}</Text>
@@ -129,8 +129,12 @@ const ProfileScreen = () => {
 
                                 {/* aa */}
                             </View>
-
-                            <Text style={styles.email}>{userData.email}</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Icon style={{ width: 25, height: 25, padding: 5, margin: 5 }}
+                                    name='email-outline'
+                                />
+                                <Text style={styles.email}>{userData.email}</Text>
+                            </View>
 
                         </View>
 

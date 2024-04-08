@@ -12,7 +12,7 @@ const recycle = () => {
                 <View>
 
                     <View>
-                        <Text>This is recycle</Text>
+                        {/* <Text>This is recycle</Text> */}
                         <Product />
 
                     </View>

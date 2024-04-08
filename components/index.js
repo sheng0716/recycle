@@ -25,8 +25,10 @@ import FavouriteRetailerCard from "./FavouriteRetailerCard";
 import FavouriteCenterCard from "./FavouriteCenterCard";
 
 import ReviewCenterCard from "./ReviewCenterCard";
-// import ReviewRetailerCard from "./ReviewRetailerCard";
+import ReviewRetailerCard from "./ReviewRetailerCard";
 
+import AllRetailer from "./AllRetailer";
+import RetailerCard from "./RetailerCard";
 
 export {
   ScreenHeaderBtn,
@@ -47,5 +49,7 @@ export {
   FooterRecycle,
   FooterRetailer,
   ReviewCenterCard,
-
+  ReviewRetailerCard,
+  AllRetailer,
+  RetailerCard,
 };

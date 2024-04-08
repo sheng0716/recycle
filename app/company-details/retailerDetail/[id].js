@@ -16,7 +16,7 @@ import {
     About,
     Tabs,
     ScreenHeaderBtn,
-
+    ReviewRetailerCard,
     RetailerProductCard,
     FooterRetailer,
 } from "../../../components";
@@ -27,7 +27,7 @@ import productDbService from "../../../assets/DbService/productDbService";
 import MaterialCard from "../../../components/jobdetails/MaterialTab/MaterialCard";
 import { useAuth } from "../../AuthProvider";
 
-const tabs = ["About", "Products", "Location"];
+const tabs = ["About", "Products", "Reviews", "Location"];
 
 const retailerDetail = () => {
     const { userId } = useAuth();
@@ -47,6 +47,7 @@ const retailerDetail = () => {
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [refreshing, setRefreshing] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
+    const [review, setReview] = useState([]);
 
     // const fetchData = async () => {
     //     try {
@@ -103,15 +104,31 @@ const retailerDetail = () => {
             setIsLoading(false);
         }
     }
+    const fetchReviewData = async () => {
+        setIsLoading(true);
+        try {
+            const reviewData = await companiesDbService.getReviewRetailerByRetailerId(c_id);
+            setReview(reviewData);
+            console.log('Review: ', reviewData);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     useEffect(() => {
         fetchRetailerData();
         fetchProductData();
+        fetchReviewData();
     }, [])
 
     const refetch = () => {
         setIsLoading(true);
         fetchRetailerData();
         fetchProductData();
+        fetchReviewData();
     };
 
     const companyName = retailerData.name;
@@ -150,6 +167,23 @@ const retailerDetail = () => {
                         />
                     </View>
                 );
+            case "Reviews":
+                return (
+                    <View>
+                        <FlatList
+                            key={`review-list-${activeTab}`}
+                            scrollEnabled={false}
+                            data={review}
+                            renderItem={({ item }) =>
+                                <ReviewRetailerCard
+                                    item={item}
+                                />
+                            }
+                            keyExtractor={(item, index) => `review-${index}`}
+                        />
+                    </View>
+                );
+
 
 
             case "Location":
@@ -219,9 +253,9 @@ const retailerDetail = () => {
                         <Text>No data available</Text>
                     ) : (
                         <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
-                            <Text>{params.id}</Text>
+                            {/* <Text>{params.id}</Text> */}
                             {/* <Text>{data}</Text> */}
-                            <Text>{retailerData.name}</Text>
+                            {/* <Text>{retailerData.name}</Text> */}
                             <Company
                                 companyLogo={retailerData.logoPath}
                                 name={retailerData.name}

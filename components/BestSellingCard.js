@@ -33,7 +33,7 @@ const BestSellingCard = ({ item }) => {
             </TouchableOpacity>
             <View style={styles.infoContainer}>
 
-                <Text style={{ fontSize: 17, }}>THIS IS RETAILER ID {item.retailerId}</Text>
+                {/* <Text style={{ fontSize: 17, }}>THIS IS RETAILER ID {item.retailerId}</Text> */}
                 <Text style={{ fontSize: 17, }}>{item.name}</Text>
                 <Text style={{ fontSize: 15, }}>RM {item.price}</Text>
                 <Text style={{ fontSize: 13, padding: 3, color: COLORS.primary }}>{item.quantity} pcs</Text>

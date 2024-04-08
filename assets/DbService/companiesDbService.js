@@ -62,6 +62,15 @@ let pre_url = config.settings.serverPath;
 //     }
 // };
 // /api/centers/<int:materialId></int:materialId>
+const getAllRetailer = async () => {
+    try {
+        const response = await axios.get(`${pre_url}/api/retailers`)
+        return response.data.retailers;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 const getCenterDataByMaterialId = async (materialId, page = 1, limit = 10) => {
     try {
@@ -169,7 +178,7 @@ const getReviewCenterByCenterId = async (centerId) => {
 const getReviewRetailerByRetailerId = async (retailerId) => {
     try {
         const response = await axios.get(`${pre_url}/api/review/retailerId=${retailerId}`)
-        return response.data;
+        return response.data.reviews;
     } catch (error) {
         console.error(error)
         throw error;
@@ -177,10 +186,8 @@ const getReviewRetailerByRetailerId = async (retailerId) => {
 }
 
 export default {
-    // getAllCompanies,
-    // getAllRetailer,
-    // getAllCompanyDetailsBycompanyId,
-    // getAllCenters,
+
+    getAllRetailer,
 
     getCenterDataByMaterialId,
     getCenterDataByCenterId,

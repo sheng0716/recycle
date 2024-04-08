@@ -121,9 +121,11 @@ const SearchResultScreen = () => {
                     headerTitleAlign: 'center'
                 }}
             />
-            <Text>this is the material id: {params.id}</Text>
+
+            {/* <Text>this is the material id: {params.id}</Text>
             <Text>this is the material id: {materialId}</Text>
-            <Text>{params.materialName}</Text>
+            <Text>{params.materialName}</Text> */}
+
             <FlatList
                 data={center}
                 keyExtractor={(item) => item.centerId}

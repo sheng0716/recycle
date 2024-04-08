@@ -256,9 +256,9 @@ const recycleDetail = () => {
                         <Text>No data available</Text>
                     ) : (
                         <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
-                            <Text>{params.id}</Text>
+                            {/* <Text>{params.id}</Text> */}
                             {/* <Text>{data}</Text> */}
-                            <Text>{centerData.name}</Text>
+                            {/* <Text>{centerData.name}</Text> */}
                             <Company
                                 companyLogo={centerData.logoPath}
                                 name={centerData.name}
