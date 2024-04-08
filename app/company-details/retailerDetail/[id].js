@@ -1,4 +1,4 @@
-import { Stack, useRouter, useLocalSearchParams, useNavigation, Link } from "expo-router";
+import { Stack, useRouter, useLocalSearchParams, Link } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import {
     View,
@@ -14,17 +14,14 @@ import {
 import {
     Company,
     About,
-    Footer,
     Tabs,
     ScreenHeaderBtn,
-    MapView,
-    MaterialTab,
+
     RetailerProductCard,
     FooterRetailer,
 } from "../../../components";
 import { COLORS, icons, SIZES } from "../../../constants";
-// import companiesDbService from "../../assets/DbService/companiesDbService";
-import useFetchByCompanyId from "../../../hook/useFetchByCompanyId";
+
 import companiesDbService from "../../../assets/DbService/companiesDbService";
 import productDbService from "../../../assets/DbService/productDbService";
 import MaterialCard from "../../../components/jobdetails/MaterialTab/MaterialCard";

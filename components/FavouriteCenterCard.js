@@ -7,12 +7,12 @@ import {
 } from 'react-native';
 import { checkImageURL } from "../utils";
 //this component is used to show the card in favourite page
-const FavouriteCard = ({ name, address, state, logoPath, retailerId }) => {
+const FavouriteCenterCard = ({ name, address, state, logoPath, centerId }) => {
     const router = useRouter();
     const handleCardPress = () => {
         router.push(
             {
-                pathname: `/company-details/retailerDetail/${retailerId}`
+                pathname: `/company-details/recycleDetail/${centerId}`
             }
         )
     }
@@ -23,11 +23,14 @@ const FavouriteCard = ({ name, address, state, logoPath, retailerId }) => {
                 source={{
                     uri: checkImageURL(logoPath)
                         ? logoPath
-                        : "https://firebasestorage.googleapis.com/v0/b/recycle-416816.appspot.com/o/retailer_sample_icon.png?alt=media&token=84e0c1e5-71e0-4ec8-a705-45562c1c768d",
+                        : "https://firebasestorage.googleapis.com/v0/b/recycle-416816.appspot.com/o/recycle_sample_logo.png?alt=media&token=482be921-a06a-4ab4-8779-aee00e7200c1",
                 }}
                 style={styles.image}
                 resizeMode="contain"
             />
+            {/* <Image source={{ uri: logoPath }} 
+            style={styles.image} 
+            resizeMode="contain" /> */}
             <View style={styles.textContainer}>
                 <Text style={styles.shopName}>{name}</Text>
                 <Text style={styles.shopType}>{address}</Text>
@@ -38,7 +41,7 @@ const FavouriteCard = ({ name, address, state, logoPath, retailerId }) => {
     )
 }
 
-export default FavouriteCard;
+export default FavouriteCenterCard;
 
 const styles = StyleSheet.create({
     cardContainer: {

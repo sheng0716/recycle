@@ -19,6 +19,8 @@ import {
     ScreenHeaderBtn,
     MapView,
     MaterialTab,
+    FooterRecycle,
+    ReviewCenterCard,
 } from "../../../components";
 import { COLORS, icons, SIZES } from "../../../constants";
 // import companiesDbService from "../../assets/DbService/companiesDbService";
@@ -26,19 +28,21 @@ import useFetchByCompanyId from "../../../hook/useFetchByCompanyId";
 import companiesDbService from "../../../assets/DbService/companiesDbService";
 import productDbService from "../../../assets/DbService/productDbService";
 import MaterialCard from "../../../components/jobdetails/MaterialTab/MaterialCard";
+import { useAuth } from "../../AuthProvider";
 
-const tabs = ["About", "Materials", "Location"];
+
+const tabs = ["About", "Materials", "Review", "Location"];
 
 const recycleDetail = () => {
-    const params = useLocalSearchParams();
 
-    const navigation = useNavigation();
+    const { userId } = useAuth();
 
     const router = useRouter();
     const [centerData, setCenterData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [acceptMaterial, setAcceptMaterial] = useState([]);//use to store what material the center accept
+    const [review, setReview] = useState([]);
 
     // const { data, isLoading, error, refetch } = useFetch("job-details", {
     //     job_id: params.id,
@@ -47,6 +51,7 @@ const recycleDetail = () => {
 
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [refreshing, setRefreshing] = useState(false);
+    const [isFavourite, setIsFavourite] = useState(false);
 
     // const fetchData = async () => {
     //     try {
@@ -57,9 +62,23 @@ const recycleDetail = () => {
     //     }
     // };
 
+    const params = useLocalSearchParams();
     const c_id = params.id;// this is the company id, later will will use to find materials from center materials pivot table
     // const { data, isLoading, error, refetch } = useFetchByCompanyId('/api/centers', c_id)
 
+    const onToggleFavourite = async () => {
+        try {
+            if (isFavourite) {
+                await companiesDbService.removeFavouriteCenter(userId, c_id);
+            } else {
+                await companiesDbService.addFavouriteCenter(userId, c_id);
+            }
+            // Toggle the isFavorite state
+            setIsFavourite(!isFavourite);
+        } catch (error) {
+            console.error('Error toggling favourite status', error);
+        }
+    }
     const fetchCenterData = async () => {
         setIsLoading(true);
         try {
@@ -88,15 +107,32 @@ const recycleDetail = () => {
             setIsLoading(false);
         }
     }
+
+    const fetchReviewData = async () => {
+        setIsLoading(true);
+        try {
+            const reviewData = await companiesDbService.getReviewCenterByCenterId(c_id);
+            setReview(reviewData);
+            console.log('Review: ', reviewData);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     useEffect(() => {
         fetchCenterData();
         fetchAcceptedMaterialData();
+        fetchReviewData();
     }, [])
 
     const refetch = () => {
         setIsLoading(true);
         fetchCenterData();
         fetchAcceptedMaterialData();
+        fetchReviewData();
     };
 
     const companyName = centerData.name;
@@ -131,6 +167,22 @@ const recycleDetail = () => {
                                     item={item}
                                 />
                             }
+                        />
+                    </View>
+                );
+            case "Review":
+                return (
+                    <View>
+                        <FlatList
+                            key={`review-list-${activeTab}`}
+                            scrollEnabled={false}
+                            data={review}
+                            renderItem={({ item }) =>
+                                <ReviewCenterCard
+                                    item={item}
+                                />
+                            }
+                            keyExtractor={(item, index) => `review-${index}`}
                         />
                     </View>
                 );
@@ -227,7 +279,12 @@ const recycleDetail = () => {
                     )}
                 </ScrollView>
 
-                <Footer url={centerData?.websiteUrl ?? 'https://careers.google.com/jobs/results/'} />
+                <FooterRecycle
+                    url={centerData?.websiteUrl ?? 'https://careers.google.com/jobs/results/'}
+                    isFavourite={isFavourite}
+                    onToggleFavourite={onToggleFavourite}
+
+                />
             </>
         </SafeAreaView>
     );

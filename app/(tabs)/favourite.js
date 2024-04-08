@@ -13,7 +13,7 @@ import { COLORS, SIZES, FONT } from '../../constants';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../AuthProvider';
 import companiesDbService from '../../assets/DbService/companiesDbService';
-import { FavouriteRetailerCard } from '../../components';
+import { FavouriteCenterCard, FavouriteRetailerCard } from '../../components';
 
 const favouriteType = ['Retailer', 'Recycle'];
 const Favourite = () => {
@@ -50,14 +50,31 @@ const Favourite = () => {
             setIsLoading(false);
         }
     }
+    const fetchFavouriteCenterData = async () => {
+        setIsLoading(true);
+        try {
+            //inside parameter should change to userId
+            const favouriteCenterData = await companiesDbService.getFavouriteCenterByUserId(userId);
+            setFavouriteCenter(favouriteCenterData.favourite_center);
+            console.log('Favourite Center: ', favouriteCenter);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     useEffect(() => {
         fetchFavouriteRetailerData();
+        fetchFavouriteCenterData();
     }, [])
 
     const refetch = () => {
         setIsLoading(true);
         fetchFavouriteRetailerData();
+        fetchFavouriteCenterData();
     }
 
     const onRefresh = useCallback(() => {
@@ -73,7 +90,7 @@ const Favourite = () => {
             case 'Retailer':
                 return (
                     <View>
-                        <Text>This will show retailer favourite</Text>
+                        {/* <Text>This will show retailer favourite</Text> */}
                         <View>
                             <FlatList
                                 scrollEnabled={false}
@@ -95,7 +112,19 @@ const Favourite = () => {
             case 'Recycle':
                 return (
                     <View>
-                        <Text>This will show recycle favourite</Text>
+                        {/* <Text>This will show recycle favourite</Text> */}
+                        <FlatList
+                            scrollEnabled={false}
+                            data={favouriteCenter}
+                            renderItem={({ item }) => (
+                                <FavouriteCenterCard
+                                    logoPath={item.logoPath}
+                                    name={item.centerName}
+                                    address={item.address}
+                                    state={item.state}
+                                    centerId={item.centerId}
+                                />
+                            )} />
                     </View>
                     // here should use another card because it will push to another detail page
                     //with different handle card press
@@ -107,8 +136,8 @@ const Favourite = () => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite, marginRight: SIZES.small, marginLeft: SIZES.small }}>
             <View>
-                <Text>favourite</Text>
-                <Text>UserId: {userId}</Text>
+                {/* <Text>favourite</Text>
+                <Text>UserId: {userId}</Text> */}
                 <View style={styles.tabsContainer}>
                     <FlatList
                         data={favouriteType}

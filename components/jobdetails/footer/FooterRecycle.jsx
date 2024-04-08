@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
 import styles from "./footer.style";
 import { icons } from "../../../constants";
 
-const FooterRetailer = ({ url, isFavourite, onToggleFavourite }) => {
+const FooterRecycle = ({ url, isFavourite, onToggleFavourite }) => {
   console.log('Favourite Status: ', isFavourite);
   return (
     <View style={styles.container}>
@@ -25,4 +25,4 @@ const FooterRetailer = ({ url, isFavourite, onToggleFavourite }) => {
   );
 };
 
-export default FooterRetailer;
+export default FooterRecycle;

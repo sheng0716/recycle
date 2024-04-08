@@ -24,72 +24,72 @@ def center_dict(row):
     }
 
 # Function to get all company details from the company
-@app.route('/api/companies', methods=['GET'])
-def api_get_all_companies():
-    try:
-        conn = sqlite3.connect(DATABASE)
-        cursor = conn.cursor()
+# @app.route('/api/companies', methods=['GET'])
+# def api_get_all_companies():
+#     try:
+#         conn = sqlite3.connect(DATABASE)
+#         cursor = conn.cursor()
 
-# fetch data from table 
-        cursor.execute('SELECT * FROM companies')
-        companies_data = cursor.fetchall()
+# # fetch data from table 
+#         cursor.execute('SELECT * FROM companies')
+#         companies_data = cursor.fetchall()
 
-        # Get column names
-        cursor.execute("PRAGMA table_info(companies)")
-        columns_info = cursor.fetchall()
-        column_names = [column[1] for column in columns_info]
+#         # Get column names
+#         cursor.execute("PRAGMA table_info(companies)")
+#         columns_info = cursor.fetchall()
+#         column_names = [column[1] for column in columns_info]
 
-    #    Create dictionaries with keys matching column names
-        companies_with_headers = []
-        for row in companies_data:
-            company_dict = {}
-            for i, column_name in enumerate(column_names):
-                company_dict[column_name] = row[i]
-            companies_with_headers.append(company_dict)
-        return jsonify({'companies': companies_with_headers})
+#     #    Create dictionaries with keys matching column names
+#         companies_with_headers = []
+#         for row in companies_data:
+#             company_dict = {}
+#             for i, column_name in enumerate(column_names):
+#                 company_dict[column_name] = row[i]
+#             companies_with_headers.append(company_dict)
+#         return jsonify({'companies': companies_with_headers})
 
-    except Exception as e:
-        print('Error:', str(e))
-        return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
+#     except Exception as e:
+#         print('Error:', str(e))
+#         return jsonify({'error': str(e)}), 500
+#     finally:
+#         conn.close()
         
 
-# Function to get all retailer details from the company list
-@app.route('/api/companies/retailer', methods=['GET'])
-def api_get_all_companies_with_retailer():
-    try:
-        conn = sqlite3.connect(DATABASE)
-        cursor = conn.cursor()
+# # Function to get all retailer details from the company list
+# @app.route('/api/companies/retailer', methods=['GET'])
+# def api_get_all_companies_with_retailer():
+#     try:
+#         conn = sqlite3.connect(DATABASE)
+#         cursor = conn.cursor()
 
-        sql_command = "SELECT * FROM companies WHERE type = 'retailer';"
-        cursor.execute(sql_command)
-        retailer_companies = cursor.fetchall()
-        return jsonify({'retailer': retailer_companies})
+#         sql_command = "SELECT * FROM companies WHERE type = 'retailer';"
+#         cursor.execute(sql_command)
+#         retailer_companies = cursor.fetchall()
+#         return jsonify({'retailer': retailer_companies})
 
-    except Exception as e:
-        print('Error:', str(e))
-        return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
+#     except Exception as e:
+#         print('Error:', str(e))
+#         return jsonify({'error': str(e)}), 500
+#     finally:
+#         conn.close()
 
-# Function to get all recycle details from the company list
-@app.route('/api/companies/recycle', methods=['GET'])
-def api_get_all_companies_with_recycle():
-    try:
-        conn = sqlite3.connect(DATABASE)
-        cursor = conn.cursor()
+# # Function to get all recycle details from the company list
+# @app.route('/api/companies/recycle', methods=['GET'])
+# def api_get_all_companies_with_recycle():
+#     try:
+#         conn = sqlite3.connect(DATABASE)
+#         cursor = conn.cursor()
 
-        sql_command = "SELECT * FROM companies WHERE type = 'recycle';"
-        cursor.execute(sql_command)
-        recycle_companies = cursor.fetchall()
-        return jsonify({'recycle': recycle_companies})
+#         sql_command = "SELECT * FROM companies WHERE type = 'recycle';"
+#         cursor.execute(sql_command)
+#         recycle_companies = cursor.fetchall()
+#         return jsonify({'recycle': recycle_companies})
 
-    except Exception as e:
-        print('Error:', str(e))
-        return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
+#     except Exception as e:
+#         print('Error:', str(e))
+#         return jsonify({'error': str(e)}), 500
+#     finally:
+#         conn.close()
 
 def get_row_material_as_dict(row):
     row_dict={
@@ -99,6 +99,26 @@ def get_row_material_as_dict(row):
         'imagePath':row[3],
     }
     return row_dict
+
+
+
+# Function to get company details by companyId from companies
+@app.route('/api/companies/<int:companyId>', methods=['GET'])
+def api_get_company_detail_by_companyId(companyId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command='SELECT * FROM companies WHERE companyId = ?;'
+        cursor.execute(sql_command, (companyId,))
+        company=cursor.fetchall()
+        return jsonify(company)
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
 
 # Function to get recycle material data
 @app.route('/api/materials', methods=['GET'])
@@ -129,26 +149,6 @@ def api_get_all_materials():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
-# Function to get company details by companyId from companies
-@app.route('/api/companies/<int:companyId>', methods=['GET'])
-def api_get_company_detail_by_companyId(companyId):
-    try:
-        conn = sqlite3.connect(DATABASE)
-        cursor = conn.cursor()
-
-        sql_command='SELECT * FROM companies WHERE companyId = ?;'
-        cursor.execute(sql_command, (companyId,))
-        company=cursor.fetchall()
-        return jsonify(company)
-
-    except Exception as e:
-        print('Error:', str(e))
-        return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
-
 
 # Function to get company id from pivot table by materialId
 @app.route('/api/materials/<int:materialId>', methods=['GET'])
@@ -392,7 +392,57 @@ def api_get_retailer_selling_products_by_retailerId(retailerId):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
+######Review and Rating##############################################################
+def review_retailer_dict(row):
+    return {
+        'reviewId': row[0],
+        'retailerId': row[1],
+        'rating': row[2],
+        'comment': row[3],
+    }
+def review_center_dict(row):
+    return {
+        'reviewId': row[0],
+        'centerId': row[1],
+        'rating': row[2],
+        'comment': row[3],
+    }
+@app.route('/api/review/retailerId=<int:retailerId>', methods=['GET'])
+def api_get_retailer_review_by_retailerId(retailerId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
 
+        sql_command='SELECT * FROM review_retailer WHERE retailerId=?;'
+        cursor.execute(sql_command,(retailerId,))
+        rows=cursor.fetchall()
+
+        reviews=[review_retailer_dict(row)for row in rows]
+        return jsonify({'reviews':reviews})
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+@app.route('/api/review/centerId=<int:centerId>', methods=['GET'])
+def api_get_center_review_by_centerId(centerId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command='SELECT * FROM review_center WHERE centerId=?;'
+        cursor.execute(sql_command,(centerId,))
+        rows=cursor.fetchall()
+
+        reviews=[review_center_dict(row)for row in rows]
+        return jsonify({'reviews':reviews})
+
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
 
 ######Favourite Stuff######################################################
 
@@ -408,12 +458,16 @@ def favourite_retailer(row):
 def favourite_center(row):
     return {
         'userId': row[0],
-        'retailerId': row[1],
+        'centerId': row[1],
+        'centerName':row[3],
+        'address':row[4],
+        'state':row[5],
+        'logoPath':row[12],
     }
         
 #Get Favourite Retailer Data by userId
 @app.route('/api/favourite/retailer/userId=<int:userId>', methods=['GET'])
-def api_get_favourite_product_by_userId(userId):
+def api_get_favourite_retailers_by_userId(userId):
     try:
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
@@ -438,13 +492,13 @@ def api_get_favourite_center_by_userId(userId):
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
-        sql_command='SELECT * FROM favourite_centers WHERE userId=?;'
+        sql_command='SELECT * FROM favourite_centers JOIN center ON favourite_centers.centerId=center.centerId WHERE favourite_centers.userId=?;'
         cursor.execute(sql_command,(userId,))
         rows=cursor.fetchall()
 
         favourite_centers=[favourite_center(row)for row in rows]
 
-        return jsonify({'favourite_retailer': favourite_centers})
+        return jsonify({'favourite_center': favourite_centers})
     except Exception as e:
         print('Error:', str(e))
         return jsonify({'error': str(e)}), 500
@@ -453,7 +507,7 @@ def api_get_favourite_center_by_userId(userId):
 
 # Insert favourite retailer into favourite retailer table
 @app.route('/api/favourite/retailer/add', methods=['POST'])
-def api_insert_favourite_product():
+def api_insert_favourite_retailer():
     try:
         data=request.get_json()
         userId=data.get('userId')
@@ -480,16 +534,66 @@ def api_insert_favourite_product():
     finally:
         conn.close()
 
+# Insert favourite center into favourite center table
+@app.route('/api/favourite/center/add', methods=['POST'])
+def api_insert_favourite_center():
+    try:
+        data=request.get_json()
+        userId=data.get('userId')
+        centerId=data.get('centerId')
+
+        conn=sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        #Check if the record already exists
+        cursor.execute('SELECT * FROM favourite_centers WHERE userId=? AND centerId=?',(userId,centerId))
+        existing_record=cursor.fetchone()
+
+        if existing_record:
+            return jsonify({'message': 'Record already exists'})
+        #Insert record
+        cursor.execute('INSERT INTO favourite_centers (userId,centerId) VALUES (?,?)',(userId,centerId))
+        conn.commit()
+        return jsonify({'message': 'Record inserted successfully'})
+
+    except Exception as e:
+        print('Error:', str(e))
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
 
 # Remove favourite product from favourite product table
-@app.route('/api/favourite/retailer/remove', methods=['DELETE'])
-def api_remove_from_favourite_product(userId,retailerId):
+@app.route('/api/favourite/retailer/remove/userId=<int:userId>/retailerId=<int:retailerId>', methods=['DELETE'])
+def api_remove_from_favourite_retailer(userId,retailerId):
     try:
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
         # Delete the record
         cursor.execute('DELETE FROM favourite_retailers WHERE userId = ? AND retailerId = ?', (userId, retailerId))
+        conn.commit()
+
+        if cursor.rowcount > 0:
+            return jsonify({'message': 'Record removed successfully'})
+        else:
+            return jsonify({'message': 'Record not found'})
+    except Exception as e:
+        print('Error:', str(e))
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+# Remove favourite center from favourite center table
+@app.route('/api/favourite/center/remove/userId=<int:userId>/centerId=<int:centerId>', methods=['DELETE'])
+def api_remove_from_favourite_center(userId,centerId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        # Delete the record
+        cursor.execute('DELETE FROM favourite_centers WHERE userId = ? AND centerId = ?', (userId, centerId))
         conn.commit()
 
         if cursor.rowcount > 0:
@@ -522,7 +626,7 @@ def api_get_user_data_by_userId(userId):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
+#Function update user data
 @app.route('/api/users/userId=<int:user_id>', methods=['PUT'])
 def api_update_user_data(user_id):
     try:

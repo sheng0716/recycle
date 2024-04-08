@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableOpacity, View, Text, Image } from "react-native";
 import styles from "./MaterialCard.style";
 import { useRouter } from "expo-router";
+import { checkImageURL } from "../../../utils";
 
 //task for this page is complete the material image
 const images = {

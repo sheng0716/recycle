@@ -9,7 +9,7 @@ import { AuthProvider } from "./AuthProvider";
 
 export const unstable_settings = {
     // Ensure any route can link back to `/`
-    initialRouteName: "home",
+    initialRouteName: "Login",
 };
 
 const Layout = () => {

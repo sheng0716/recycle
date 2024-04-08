@@ -12,6 +12,7 @@ import { default as Tabs } from "./jobdetails/tabs/Tabs";
 import { default as About } from "./jobdetails/about/About";
 import { default as Footer } from "./jobdetails/footer/Footer";
 import FooterRetailer from "./jobdetails/footer/FooterRetailer";
+import FooterRecycle from "./jobdetails/footer/FooterRecycle";
 
 // common
 import NearbyJobCard from "./common/cards/CardInfo";
@@ -21,6 +22,10 @@ import BestSellingCard from "./BestSellingCard";
 import RetailerProductCard from "./RetailerProductCard";
 
 import FavouriteRetailerCard from "./FavouriteRetailerCard";
+import FavouriteCenterCard from "./FavouriteCenterCard";
+
+import ReviewCenterCard from "./ReviewCenterCard";
+// import ReviewRetailerCard from "./ReviewRetailerCard";
 
 
 export {
@@ -38,6 +43,9 @@ export {
   BestSellingCard,
   RetailerProductCard,
   FavouriteRetailerCard,
+  FavouriteCenterCard,
+  FooterRecycle,
   FooterRetailer,
+  ReviewCenterCard,
 
 };

@@ -15,7 +15,7 @@ const CardInfo = ({ company, handleNavigate }) => {
           source={{
             uri: checkImageURL(company.logoPath)
               ? company.logoPath
-              : "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
+              : "https://firebasestorage.googleapis.com/v0/b/recycle-416816.appspot.com/o/image_icon.png?alt=media&token=77c40ce3-5b7c-434b-a90d-78099726734e",
           }}
           resizeMode='contain'
           style={styles.logImage}
@@ -32,7 +32,7 @@ const CardInfo = ({ company, handleNavigate }) => {
         <Text style={styles.location}> {company.state}</Text>
       </View>
 
-    </TouchableOpacity >
+    </TouchableOpacity>
   );
 };
 
