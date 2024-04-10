@@ -8,6 +8,18 @@
       "expo-router"
     ],
     "name": "recycle",
-    "slug": "recycle"
+    "slug": "recycle",
+    "android": {
+      "package": "com.anonymous.recycle",
+      "googleServiceFile": "./android/app/google-services.json"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "5232c504-7b7b-4538-bbf4-a64377236bf0"
+      }
+    }
   }
 }

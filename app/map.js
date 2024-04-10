@@ -55,7 +55,7 @@ const map = () => {
             lon2: longitude.toString(),
         },
         headers: {
-            'X-RapidAPI-Key': 'cb36ed8f1dmsh898d8c5ae1f13e8p19ec38jsn858f2fc09078',
+            'X-RapidAPI-Key': '378d3ffb8amsh19157c86607fb19p1e6485jsn5eb95af421c7',
             'X-RapidAPI-Host': 'geocodeapi.p.rapidapi.com'
         }
     };

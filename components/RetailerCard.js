@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import axios from "axios";
 
 const RetailerCard = ({ companyName, logoPath, contactNo, state }) => {
+
     return (
         <View style={styles.card}>
             {logoPath ? (

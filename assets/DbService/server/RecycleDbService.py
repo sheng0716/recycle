@@ -752,5 +752,60 @@ def api_register_user():
         conn.close()
     
 
+####Review ######################
+#Function add new review into review_center
+@app.route('/api/add/review_center', methods=['POST'])
+def api_add_review_center():
+    try:
+        data = request.get_json()
+        centerId = data.get('centerId')
+        rating = data.get('rating')
+        comment = data.get('comment')
+
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        # Insert the new user record into the database
+        cursor.execute('INSERT INTO review_center (centerId, rating,comment ) VALUES (?, ?, ?)',
+                       (centerId, rating, comment))
+
+
+        conn.commit()
+
+        return jsonify({'message':'Add review successful'})
+
+    except Exception as e:
+        print('Error:', str(e))
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+@app.route('/api/add/review_retailer', methods=['POST'])
+def api_add_review_retailer():
+    try:
+        data = request.get_json()
+        retailerId = data.get('retailerId')
+        rating = data.get('rating')
+        comment = data.get('comment')
+
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        # Insert the new user record into the database
+        cursor.execute('INSERT INTO review_retailer (retailerId, rating,comment ) VALUES (?, ?, ?)',
+                       (retailerId, rating, comment))
+
+
+        conn.commit()
+
+        return jsonify({'message':'Add review successful'})
+
+    except Exception as e:
+        print('Error:', str(e))
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
 if __name__ == '__main__':
     app.run(debug=True)

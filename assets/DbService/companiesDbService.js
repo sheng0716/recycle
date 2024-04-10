@@ -185,6 +185,25 @@ const getReviewRetailerByRetailerId = async (retailerId) => {
     }
 }
 
+const addCenterReview = async (centerId, rating, comment) => {
+    try {
+        const response = await axios.post(`${pre_url}/api/add/review_center`, { centerId, rating, comment });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+const addRetailerReview = async (retailerId, rating, comment) => {
+    try {
+        const response = await axios.post(`${pre_url}/api/add/review_retailer`, { retailerId, rating, comment });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 export default {
 
     getAllRetailer,
@@ -203,4 +222,7 @@ export default {
 
     getReviewCenterByCenterId,
     getReviewRetailerByRetailerId,
+
+    addCenterReview,
+    addRetailerReview,
 };

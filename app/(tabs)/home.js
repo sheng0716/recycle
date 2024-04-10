@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, View, TouchableOpacity, StyleSheet, Text, Image } from "react-native";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useRouter, Link } from "expo-router";
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Drawer } from "expo-router/drawer";
 import * as Location from 'expo-location';
+// import { usePushNotifications } from "../usePushNotification";
+// import * as Notifications from 'expo-notifications';
 
 import { COLORS, icons, images, SIZES, FONT } from "../../constants";
 import {
@@ -18,33 +20,9 @@ import {
 const promotionImage = 'https://firebasestorage.googleapis.com/v0/b/recycle-416816.appspot.com/o/promo-dim-0100ea4fde9a006173f690b2e0915ef32b8d.png?alt=media&token=6e30cd22-1851-4d3e-97d8-6733d216711b'
 const Home = () => {
     const router = useRouter()
-    const [searchTerm, setSearchTerm] = useState("");
 
-
-    // const [location, setLocation] = useState(null);
-    // const [errorMsg, setErrorMsg] = useState(null);
-
-    // useEffect(() => {
-    //     (async () => {
-
-    //         let { status } = await Location.requestForegroundPermissionsAsync();
-    //         if (status !== 'granted') {
-    //             setErrorMsg('Permission to access location was denied');
-    //             return;
-    //         }
-
-    //         let location = await Location.getCurrentPositionAsync({});
-    //         setLocation(location);
-    //         console.log(location);
-    //     })();
-    // }, []);
-
-    // let text = 'Waiting..';
-    // if (errorMsg) {
-    //     text = errorMsg;
-    // } else if (location) {
-    //     text = JSON.stringify(location);
-    // }
+    // const { expoPushToken, notification } = usePushNotifications();
+    // const data = JSON.stringify(notification, undefined, 2);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -72,13 +50,6 @@ const Home = () => {
                     }}
                 >
                     <Welcome
-                    // searchTerm={searchTerm}
-                    // setSearchTerm={setSearchTerm}
-                    // handleClick={() => {
-                    //     if (searchTerm) {
-                    //         router.push(`/search/${searchTerm}`)
-                    //     }
-                    // }}
                     />
                     <View style={styles.PromtionContainer}>
                         <Text style={styles.PromotionTitle}>Promotion</Text>
@@ -94,6 +65,8 @@ const Home = () => {
                         <Text style={styles.PriceTitle}>
                             Current Recycling Material Accept Price
                         </Text>
+                        {/* <Text>Token: {expoPushToken?.data ?? ""}</Text>
+                        <Text>{data}</Text> */}
                     </View>
 
 
