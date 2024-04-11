@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 10,
   },
   locationImage: {
     width: 14,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     tintColor: COLORS.gray,
   },
   locationName: {
-    fontSize: SIZES.medium - 2,
+    fontSize: SIZES.large - 4,
     color: COLORS.gray,
     fontFamily: FONT.regular,
     marginLeft: 2,

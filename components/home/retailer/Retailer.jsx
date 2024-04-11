@@ -10,10 +10,10 @@ import {
 
 import styles from './retailer.style'
 import { COLORS, SIZES } from "../../../constants";
-import PopularJobCard from "../../common/cards/popular/PopularJobCard";
+import PopularJobCard from "../../common/cards/PopularJobCard";
 // import useFetch from "../../../hook/useFetch";
 import companiesDbService from "../../../assets/DbService/companiesDbService";
-
+//this actually refer to popularjobs.jsx
 const Retailer = () => {
   const router = useRouter();
 

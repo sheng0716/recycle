@@ -2,28 +2,54 @@ import ScreenHeaderBtn from "./common/header/ScreenHeaderBtn";
 
 // home screen
 import Welcome from "./home/welcome/Welcome";
-import Nearbyjobs from "./home/recycle/Nearbyjobs";
+import Recycle from "./home/recycle/Recycle";
 import Retailer from "./home/retailer/Retailer";
+import Product from "./home/product/Product";
 
 // job details screen
 import Company from "./jobdetails/company/Company";
-import { default as JobTabs } from "./jobdetails/tabs/Tabs";
-import { default as JobAbout } from "./jobdetails/about/About";
-import { default as JobFooter } from "./jobdetails/footer/Footer";
-import Specifics from "./jobdetails/specifics/Specifics";
+import { default as Tabs } from "./jobdetails/tabs/Tabs";
+import { default as About } from "./jobdetails/about/About";
+import { default as Footer } from "./jobdetails/footer/Footer";
+import FooterRetailer from "./jobdetails/footer/FooterRetailer";
+import FooterRecycle from "./jobdetails/footer/FooterRecycle";
 
 // common
-import NearbyJobCard from "./common/cards/nearby/NearbyJobCard";
+import NearbyJobCard from "./common/cards/CardInfo";
+
+import BestSelling from "./BestSelling";
+import BestSellingCard from "./BestSellingCard";
+import RetailerProductCard from "./RetailerProductCard";
+
+import FavouriteRetailerCard from "./FavouriteRetailerCard";
+import FavouriteCenterCard from "./FavouriteCenterCard";
+
+import ReviewCenterCard from "./ReviewCenterCard";
+import ReviewRetailerCard from "./ReviewRetailerCard";
+
+import AllRetailer from "./AllRetailer";
+import RetailerCard from "./RetailerCard";
 
 export {
   ScreenHeaderBtn,
   Welcome,
-  Nearbyjobs,
   Retailer,
   Company,
-  JobTabs,
-  JobAbout,
-  JobFooter,
-  Specifics,
-  NearbyJobCard
+  Tabs,
+  About,
+  Footer,
+  NearbyJobCard,
+  Product,
+  Recycle,
+  BestSelling,
+  BestSellingCard,
+  RetailerProductCard,
+  FavouriteRetailerCard,
+  FavouriteCenterCard,
+  FooterRecycle,
+  FooterRetailer,
+  ReviewCenterCard,
+  ReviewRetailerCard,
+  AllRetailer,
+  RetailerCard,
 };

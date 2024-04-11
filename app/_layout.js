@@ -1,12 +1,15 @@
 import { Stack } from "expo-router";
+
+import { Drawer } from "expo-router/drawer";
 import { useFonts } from "expo-font";
 // import * as SplashScreen from "expo-splash-screen";
 
 // SplashScreen.preventAutoHideAsync();
+import { AuthProvider } from "./AuthProvider";
 
 export const unstable_settings = {
     // Ensure any route can link back to `/`
-    initialRouteName: "home",
+    initialRouteName: "Login",
 };
 
 const Layout = () => {
@@ -21,9 +24,17 @@ const Layout = () => {
     }
 
     return (
-        <Stack initialRouteName="home">
-            <Stack.Screen name="home" />
-        </Stack>
+        <AuthProvider>
+
+            <Stack
+            // initialRouteName="home"
+            >
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+
+            </Stack>
+        </AuthProvider>
+
     )
 };
 
