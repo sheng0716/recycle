@@ -13,6 +13,7 @@ import {
     Modal,
     Alert,
     Button,
+    StyleSheet,
 } from "react-native";
 
 import {
@@ -56,6 +57,7 @@ const retailerDetail = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
+    const [averageRating, setAverageRating] = useState("No rating");
     // const fetchData = async () => {
     //     try {
     //         const companiesData = await companiesDbService.getAllCompanyDetailsBycompanyId(companyId);
@@ -132,10 +134,25 @@ const retailerDetail = () => {
             setIsLoading(false);
         }
     }
+    const fetchAverageRating = async () => {
+        setIsLoading(true);
+        try {
+            const averageRating = await companiesDbService.getAverageRatingByRetailerId(c_id);
+            setAverageRating(averageRating);
+            console.log('Average Rating: ', averageRating);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     useEffect(() => {
         fetchRetailerData();
         fetchProductData();
         fetchReviewData();
+        fetchAverageRating();
     }, [])
 
     const refetch = () => {
@@ -143,6 +160,7 @@ const retailerDetail = () => {
         fetchRetailerData();
         fetchProductData();
         fetchReviewData();
+        fetchAverageRating();
     };
 
     const companyName = retailerData.name;
@@ -184,6 +202,7 @@ const retailerDetail = () => {
             case "Reviews":
                 return (
                     <View>
+                        <Text style={styles.averageRating}>Average Rating: {averageRating}/5</Text>
                         <TouchableOpacity
                             style={{ padding: 10, backgroundColor: 'blue', borderRadius: 5 }}
                             onPress={() => setModalVisible(true)}
@@ -395,3 +414,14 @@ const retailerDetail = () => {
 };
 
 export default retailerDetail;
+const styles = StyleSheet.create({
+    // Existing styles...
+    averageRating: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: '#4CAF50', // A pleasant green, but choose any color that fits your app's theme
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    // Any other styles...
+});

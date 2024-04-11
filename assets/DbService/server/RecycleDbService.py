@@ -22,73 +22,6 @@ def center_dict(row):
         'locationUrl': row[9],
         'logoPath': row[10]
     }
-# Function to get all company details from the company
-# @app.route('/api/companies', methods=['GET'])
-# def api_get_all_companies():
-#     try:
-#         conn = sqlite3.connect(DATABASE)
-#         cursor = conn.cursor()
-
-# # fetch data from table 
-#         cursor.execute('SELECT * FROM companies')
-#         companies_data = cursor.fetchall()
-
-#         # Get column names
-#         cursor.execute("PRAGMA table_info(companies)")
-#         columns_info = cursor.fetchall()
-#         column_names = [column[1] for column in columns_info]
-
-#     #    Create dictionaries with keys matching column names
-#         companies_with_headers = []
-#         for row in companies_data:
-#             company_dict = {}
-#             for i, column_name in enumerate(column_names):
-#                 company_dict[column_name] = row[i]
-#             companies_with_headers.append(company_dict)
-#         return jsonify({'companies': companies_with_headers})
-
-#     except Exception as e:
-#         print('Error:', str(e))
-#         return jsonify({'error': str(e)}), 500
-#     finally:
-#         conn.close()
-        
-
-# # Function to get all retailer details from the company list
-# @app.route('/api/companies/retailer', methods=['GET'])
-# def api_get_all_companies_with_retailer():
-#     try:
-#         conn = sqlite3.connect(DATABASE)
-#         cursor = conn.cursor()
-
-#         sql_command = "SELECT * FROM companies WHERE type = 'retailer';"
-#         cursor.execute(sql_command)
-#         retailer_companies = cursor.fetchall()
-#         return jsonify({'retailer': retailer_companies})
-
-#     except Exception as e:
-#         print('Error:', str(e))
-#         return jsonify({'error': str(e)}), 500
-#     finally:
-#         conn.close()
-
-# # Function to get all recycle details from the company list
-# @app.route('/api/companies/recycle', methods=['GET'])
-# def api_get_all_companies_with_recycle():
-#     try:
-#         conn = sqlite3.connect(DATABASE)
-#         cursor = conn.cursor()
-
-#         sql_command = "SELECT * FROM companies WHERE type = 'recycle';"
-#         cursor.execute(sql_command)
-#         recycle_companies = cursor.fetchall()
-#         return jsonify({'recycle': recycle_companies})
-
-#     except Exception as e:
-#         print('Error:', str(e))
-#         return jsonify({'error': str(e)}), 500
-#     finally:
-#         conn.close()
 
 def get_row_material_as_dict(row):
     row_dict={
@@ -98,7 +31,6 @@ def get_row_material_as_dict(row):
         'imagePath':row[3],
     }
     return row_dict
-
 
 
 # Function to get company details by companyId from companies
@@ -806,6 +738,59 @@ def api_add_review_retailer():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
+@app.route('/api/average_rating/centerId=<int:centerId>', methods=['GET'])
+def api_getAverageRating_from_review_center_by_centerId(centerId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command='''
+        SELECT AVG(CAST(rating AS FLOAT)) AS averageRating
+        FROM review_center
+        WHERE centerId=?
+        '''
+        cursor.execute(sql_command,(centerId,))
+        average_rating = cursor.fetchone()[0]
+
+
+        if average_rating is not None:
+            # Successfully found the average rating, return it
+            return jsonify({'centerId': centerId, 'averageRating': average_rating})
+        else:
+            # No ratings found for this centerId
+            return jsonify({'centerId': centerId, 'averageRating': 'No ratings found'})
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+@app.route('/api/average_rating/retailerId=<int:retailerId>', methods=['GET'])
+def api_getAverageRating_from_review_retailer_by_retailerId(retailerId):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        sql_command='''
+        SELECT AVG(CAST(rating AS FLOAT)) AS averageRating
+        FROM review_retailer
+        WHERE retailerId=?
+        '''
+        cursor.execute(sql_command,(retailerId,))
+        average_rating = cursor.fetchone()[0]
+
+
+        if average_rating is not None:
+            # Successfully found the average rating, return it
+            return jsonify({'retailerId': retailerId, 'averageRating': average_rating})
+        else:
+            # No ratings found for this centerId
+            return jsonify({'retailerId': retailerId, 'averageRating': 'No ratings found'})
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)

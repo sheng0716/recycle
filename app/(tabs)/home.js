@@ -21,15 +21,13 @@ const promotionImage = 'https://firebasestorage.googleapis.com/v0/b/recycle-4168
 const Home = () => {
     const router = useRouter()
 
-    // const { expoPushToken, notification } = usePushNotifications();
-    // const data = JSON.stringify(notification, undefined, 2);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
-                    headerShadowVisible: false,
+                    headerShadowVisible: true,
                     // headerLeft: () => (
 
                     //     <ScreenHeaderBtn iconUrl={icons.menu} dimension='60%' />
@@ -49,8 +47,14 @@ const Home = () => {
                         padding: SIZES.medium,
                     }}
                 >
-                    <Welcome
-                    />
+                    <View>
+                        <View style={styles.container}>
+                            <Text style={styles.userName}>Hello </Text>
+                            <Text style={styles.welcomeMessage}>What are looking for?</Text>
+                            <Text style={styles.welcomeMessage}>Today Special</Text>
+                        </View>
+
+                    </View>
                     <View style={styles.PromtionContainer}>
                         <Text style={styles.PromotionTitle}>Promotion</Text>
                         <View>
@@ -65,8 +69,6 @@ const Home = () => {
                         <Text style={styles.PriceTitle}>
                             Current Recycling Material Accept Price
                         </Text>
-                        {/* <Text>Token: {expoPushToken?.data ?? ""}</Text>
-                        <Text>{data}</Text> */}
                     </View>
 
 
@@ -78,6 +80,20 @@ const Home = () => {
 
 export default Home;
 const styles = StyleSheet.create({
+    container: {
+        width: "100%",
+    },
+    userName: {
+        fontFamily: FONT.regular,
+        fontSize: SIZES.large,
+        color: COLORS.secondary,
+    },
+    welcomeMessage: {
+        fontFamily: FONT.bold,
+        fontSize: SIZES.xLarge,
+        color: COLORS.primary,
+        marginTop: 2,
+    },
     PromtionContainer: {
         marginTop: 8,
         width: '100 %',

@@ -13,6 +13,7 @@ import {
     Alert,
     TextInput,
     Button,
+    StyleSheet,
 } from "react-native";
 
 import {
@@ -61,6 +62,7 @@ const recycleDetail = () => {
 
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
+    const [averageRating, setAverageRating] = useState("No rating");
 
     // const fetchData = async () => {
     //     try {
@@ -140,10 +142,25 @@ const recycleDetail = () => {
             setIsLoading(false);
         }
     }
+    const fetchAverageRating = async () => {
+        setIsLoading(true);
+        try {
+            const averageRating = await companiesDbService.getAverageRatingByCenterId(c_id);
+            setAverageRating(averageRating);
+            console.log('Average Rating: ', averageRating);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     useEffect(() => {
         fetchCenterData();
         fetchAcceptedMaterialData();
         fetchReviewData();
+        fetchAverageRating();
     }, [])
 
     const refetch = () => {
@@ -151,6 +168,7 @@ const recycleDetail = () => {
         fetchCenterData();
         fetchAcceptedMaterialData();
         fetchReviewData();
+        fetchAverageRating();
     };
 
     const companyName = centerData.name;
@@ -191,6 +209,8 @@ const recycleDetail = () => {
             case "Review":
                 return (
                     <View>
+                        <Text style={styles.averageRating}>Average Rating: {averageRating}/5</Text>
+
                         <TouchableOpacity
                             style={{ padding: 10, backgroundColor: 'blue', borderRadius: 5 }}
                             onPress={() => setModalVisible(true)}
@@ -403,3 +423,14 @@ const recycleDetail = () => {
 };
 
 export default recycleDetail;
+const styles = StyleSheet.create({
+    // Existing styles...
+    averageRating: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: '#4CAF50', // A pleasant green, but choose any color that fits your app's theme
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    // Any other styles...
+});
