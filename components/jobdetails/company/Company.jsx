@@ -20,7 +20,7 @@ const Company = ({ companyLogo, name, location, locationUrl, contact, type }) =>
           source={{
             uri: checkImageURL(companyLogo)
               ? companyLogo
-              : "https://firebasestorage.googleapis.com/v0/b/recycle-416816.appspot.com/o/recycle_sample_logo.png?alt=media&token=482be921-a06a-4ab4-8779-aee00e7200c1",
+              : "https://firebasestorage.googleapis.com/v0/b/recycle-416816.appspot.com/o/retailer_icon_map.png?alt=media&token=6065ac17-b217-41c0-9ecb-8c0071538b43",
           }}
           style={styles.logoImage}
           resizeMode="contain"
