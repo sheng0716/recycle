@@ -21,7 +21,6 @@ const promotionImage = 'https://firebasestorage.googleapis.com/v0/b/recycle-4168
 const Home = () => {
     const router = useRouter()
 
-
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
@@ -76,6 +75,11 @@ const Home = () => {
                                     style={styles.button}
                                     onPress={() => {
                                         // Handle the press for Retailer
+                                        router.push(
+                                            {
+                                                pathname: '../mapRetailer'
+                                            }
+                                        )
                                         console.log('Retailer pressed');
                                     }}>
                                     <Image
@@ -86,7 +90,6 @@ const Home = () => {
                                     <Text style={styles.buttonText}>Retailer</Text>
                                 </TouchableOpacity>
                             </View>
-                            <Text style={styles.welcomeMessage}>Today Special</Text>
                         </View>
 
                     </View>

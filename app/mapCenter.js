@@ -11,10 +11,7 @@ import React, { useEffect } from 'react'; // Import useEffect
 
 export default function mapCenter() {
 
-    // const onRegionChange = (region) => {
-    //     console.log(region);
-    // }
-    // Function to request location permission
+
     async function getLocationPermission() {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
@@ -31,7 +28,7 @@ export default function mapCenter() {
     }
     useEffect(() => {
         getLocationPermission();
-    }, []); // Empty array ensures this effect runs only once upon mounting
+    }, []);
 
     return (
         <View
@@ -50,7 +47,7 @@ export default function mapCenter() {
                     longitude: 101.79388610646129,
                     longitudeDelta: 0.0045419856905937195
                 }}
-                // provider={PROVIDER_GOOGLE}
+                provider={PROVIDER_GOOGLE}
                 showsMyLocationButton={true}
                 showsUserLocation={true}
             />
